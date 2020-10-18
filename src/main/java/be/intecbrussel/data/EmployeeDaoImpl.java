@@ -1,7 +1,6 @@
 package be.intecbrussel.data;
 
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Customer;
 import be.intecbrussel.entities.Employee;
 
 import javax.persistence.EntityManager;

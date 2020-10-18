@@ -1,7 +1,6 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "customers")
