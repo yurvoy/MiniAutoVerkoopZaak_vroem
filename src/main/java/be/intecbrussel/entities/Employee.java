@@ -2,6 +2,7 @@ package be.intecbrussel.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "employees")
@@ -20,7 +21,7 @@ public class Employee {
     @JoinColumn(name = "reportsTo")
     private Employee employeeToReports;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "officeCode")
     private Office office;
 
@@ -28,6 +29,7 @@ public class Employee {
     private List<Customer> customersList;
 
     public Employee() {
+        this.employeeNumber = 0;
     }
 
     public Employee(int employeeNumber) {
@@ -115,5 +117,26 @@ public class Employee {
                 ", extension='" + extension + '\'' +
                 ", email='" + email + '\'' +
                 ", jobTitle='" + jobTitle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return employeeNumber == employee.employeeNumber &&
+                Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(extension, employee.extension) &&
+                Objects.equals(email, employee.email) &&
+                Objects.equals(jobTitle, employee.jobTitle) &&
+                Objects.equals(employeeToReports, employee.employeeToReports) &&
+                Objects.equals(office, employee.office) &&
+                Objects.equals(customersList, employee.customersList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, employeeToReports, office, customersList);
     }
 }

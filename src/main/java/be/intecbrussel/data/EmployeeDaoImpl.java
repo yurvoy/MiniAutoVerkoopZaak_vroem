@@ -18,14 +18,13 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            if (employee!=null) {
-                employee = em.merge(employee);
-            }
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.persist(employee);
             transaction.commit();
-            System.out.println("Employee: " + employee.getFirstName() + " "+ employee.getLastName() + " - created");
+            if (employee != null) {
+                System.out.println("Employee: " + employee.getFirstName() + " "+ employee.getLastName() + " - created");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -19,7 +19,7 @@ public class Office {
     private String postalCode;
     private String territory;
 
-    @OneToMany(mappedBy = "office", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
     private List<Employee> employeesList;
 
     public Office() {

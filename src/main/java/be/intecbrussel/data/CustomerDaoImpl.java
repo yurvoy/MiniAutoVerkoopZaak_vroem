@@ -22,7 +22,9 @@ public class CustomerDaoImpl implements CustomerDAO {
             transaction.begin();
             em.persist(customer);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerName() + " - created");
+            if(customer != null) {
+                System.out.println("Customer: " + customer.getCustomerName() + " - created");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

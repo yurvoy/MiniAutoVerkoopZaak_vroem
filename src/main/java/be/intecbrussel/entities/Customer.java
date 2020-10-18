@@ -1,6 +1,7 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customers")
@@ -21,7 +22,7 @@ public class Customer {
     private String country;
     private double creditLimit;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "salesRepEmployeeNumber")
     private Employee employee;
 
@@ -144,5 +145,30 @@ public class Customer {
                 ", addressLine1='" + addressLine1 + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return customerNumber == customer.customerNumber &&
+                Double.compare(customer.creditLimit, creditLimit) == 0 &&
+                Objects.equals(customerName, customer.customerName) &&
+                Objects.equals(contactLastName, customer.contactLastName) &&
+                Objects.equals(contactFirstName, customer.contactFirstName) &&
+                Objects.equals(phone, customer.phone) &&
+                Objects.equals(addressLine1, customer.addressLine1) &&
+                Objects.equals(addressLine2, customer.addressLine2) &&
+                Objects.equals(city, customer.city) &&
+                Objects.equals(state, customer.state) &&
+                Objects.equals(postalCode, customer.postalCode) &&
+                Objects.equals(country, customer.country) &&
+                Objects.equals(employee, customer.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit, employee);
     }
 }
