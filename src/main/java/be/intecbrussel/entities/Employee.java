@@ -18,7 +18,7 @@ public class Employee {
 
     @OneToOne
     @JoinColumn(name = "reportsTo")
-    private Employee employee;
+    private Employee employeeToReports;
 
     @ManyToOne
     @JoinColumn(name = "officeCode")
@@ -88,6 +88,22 @@ public class Employee {
 
     public void setOffice(Office office) {
         this.office = office;
+    }
+
+    public Employee getEmployeeToReport() {
+        return employeeToReports;
+    }
+
+    public void setEmployeeToReport(Employee employeeToReports) {
+        this.employeeToReports = employeeToReports;
+    }
+
+    public List<Customer> getCustomersList() {
+        return customersList;
+    }
+
+    public void setCustomersList(List<Customer> customersList) {
+        this.customersList = customersList;
     }
 
     @Override
