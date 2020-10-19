@@ -1,19 +1,17 @@
-package be.intecbrussel.entities.embeddable;
+package be.intecbrussel.entities.pk;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class OrderDetailId implements Serializable {
+public class OrderDetailPK implements Serializable {
 
     private int orderNumber;
     private String productCode;
 
-    public OrderDetailId() {
+    public OrderDetailPK() {
     }
 
-    public OrderDetailId(int orderNumber, String productCode) {
+    public OrderDetailPK(int orderNumber, String productCode) {
         this.orderNumber = orderNumber;
         this.productCode = productCode;
     }
@@ -39,7 +37,7 @@ public class OrderDetailId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderDetailId that = (OrderDetailId) o;
+        OrderDetailPK that = (OrderDetailPK) o;
         return orderNumber == that.orderNumber &&
                 Objects.equals(productCode, that.productCode);
     }

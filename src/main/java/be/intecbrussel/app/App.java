@@ -31,29 +31,29 @@ public class App {
         System.out.println(employeeDAO.readEmployee(1001));
 
 
-        // Update entities
-        newEmployee.setFirstName("Yvonnick");
-        newEmployee.setLastName("Urvoy");
-        newEmployee.setEmail("yvonnick.urvoy@gmail.com");
-        newEmployee.setJobTitle("Java IoT student");
-        newEmployee.setOffice(new Office("8"));
-        newEmployee.setExtension("x1986");
-        employeeDAO.updateEmployee(newEmployee);
-        System.out.println(newEmployee);
-
-        newCustomer.setCustomerName("INTEC Brussel");
-        newCustomer.setContactFirstName("Bart");
-        newCustomer.setContactLastName("Hunerbein");
-        newCustomer.setAddressLine1("Rouppeplein 16");
-        newCustomer.setCity("Brussels");
-        newCustomer.setPostalCode("1000");
-        newCustomer.setCountry("Belgium");
-        newCustomer.setCreditLimit(1000000);
-        customerDAO.updateCustomer(newCustomer);
-        System.out.println(newCustomer);
-
-        System.out.println(customerDAO.readCustomer(101));
-        System.out.println(employeeDAO.readEmployee(1001));
+//        // Update entities
+//        newEmployee.setFirstName("Yvonnick");
+//        newEmployee.setLastName("Urvoy");
+//        newEmployee.setEmail("yvonnick.urvoy@gmail.com");
+//        newEmployee.setJobTitle("Java IoT student");
+//        newEmployee.setOffice(new Office("8"));
+//        newEmployee.setExtension("x1986");
+//        employeeDAO.updateEmployee(newEmployee);
+//        System.out.println(newEmployee);
+//
+//        newCustomer.setCustomerName("INTEC Brussel");
+//        newCustomer.setContactFirstName("Bart");
+//        newCustomer.setContactLastName("Hunerbein");
+//        newCustomer.setAddressLine1("Rouppeplein 16");
+//        newCustomer.setCity("Brussels");
+//        newCustomer.setPostalCode("1000");
+//        newCustomer.setCountry("Belgium");
+//        newCustomer.setCreditLimit(1000000);
+//        customerDAO.updateCustomer(newCustomer);
+//        System.out.println(newCustomer);
+//
+//        System.out.println(customerDAO.readCustomer(101));
+//        System.out.println(employeeDAO.readEmployee(1001));
 
     }
 }

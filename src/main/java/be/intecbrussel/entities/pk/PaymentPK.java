@@ -1,19 +1,18 @@
-package be.intecbrussel.entities.embeddable;
+package be.intecbrussel.entities.pk;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class PaymentId implements Serializable {
+public class PaymentPK implements Serializable {
 
     private int customerNumber;
     private String checkNumber;
 
-    public PaymentId() {
+    public PaymentPK() {
     }
 
-    public PaymentId(int customerNumber, String checkNumber) {
+    public PaymentPK(int customerNumber, String checkNumber) {
         this.customerNumber = customerNumber;
         this.checkNumber = checkNumber;
     }
@@ -39,9 +38,9 @@ public class PaymentId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PaymentId paymentId = (PaymentId) o;
-        return customerNumber == paymentId.customerNumber &&
-                Objects.equals(checkNumber, paymentId.checkNumber);
+        PaymentPK paymentPK = (PaymentPK) o;
+        return customerNumber == paymentPK.customerNumber &&
+                Objects.equals(checkNumber, paymentPK.checkNumber);
     }
 
     @Override
