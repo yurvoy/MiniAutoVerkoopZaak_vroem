@@ -8,6 +8,8 @@ import be.intecbrussel.entities.Customer;
 import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Office;
 
+import java.math.BigDecimal;
+
 public class App {
     public static void main(String[] args) {
 
@@ -47,12 +49,13 @@ public class App {
         newCustomer.setCustomerName("INTEC Brussel");
         newCustomer.setContactFirstName("Bart");
         newCustomer.setContactLastName("Hunerbein");
+        newCustomer.setPhone("+322.411.29.07");
         newCustomer.setAddressLine1("Rouppeplein 16");
         newCustomer.setCity("Brussels");
         newCustomer.setPostalCode("1000");
         newCustomer.setState("Brussels region");
         newCustomer.setCountry("Belgium");
-        newCustomer.setCreditLimit(1000000);
+        newCustomer.setCreditLimit(BigDecimal.valueOf(1000000000));
         newCustomer.setSalesRepEmployeeNumber(newEmployee);
         customerDAO.updateCustomer(newCustomer);
 

@@ -1,6 +1,7 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -19,7 +20,7 @@ public class Customer {
     private String state;
     private String postalCode;
     private String country;
-    private double creditLimit;
+    private BigDecimal creditLimit;
 
     @ManyToOne
     @JoinColumn(name = "salesRepEmployeeNumber")
@@ -121,11 +122,11 @@ public class Customer {
         this.country = country;
     }
 
-    public double getCreditLimit() {
+    public BigDecimal getCreditLimit() {
         return creditLimit;
     }
 
-    public void setCreditLimit(double creditLimit) {
+    public void setCreditLimit(BigDecimal creditLimit) {
         this.creditLimit = creditLimit;
     }
 
@@ -153,7 +154,6 @@ public class Customer {
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
         return customerNumber == customer.customerNumber &&
-                Double.compare(customer.creditLimit, creditLimit) == 0 &&
                 Objects.equals(customerName, customer.customerName) &&
                 Objects.equals(contactLastName, customer.contactLastName) &&
                 Objects.equals(contactFirstName, customer.contactFirstName) &&
@@ -164,6 +164,7 @@ public class Customer {
                 Objects.equals(state, customer.state) &&
                 Objects.equals(postalCode, customer.postalCode) &&
                 Objects.equals(country, customer.country) &&
+                Objects.equals(creditLimit, customer.creditLimit) &&
                 Objects.equals(salesRepEmployeeNumber, customer.salesRepEmployeeNumber);
     }
 
