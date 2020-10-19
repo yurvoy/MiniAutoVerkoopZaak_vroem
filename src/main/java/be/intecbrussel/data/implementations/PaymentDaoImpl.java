@@ -2,6 +2,7 @@ package be.intecbrussel.data.implementations;
 
 import be.intecbrussel.data.daos.PaymentDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
+import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Payment;
 import be.intecbrussel.entities.pk.PaymentPK;
 
@@ -80,7 +81,8 @@ public class PaymentDaoImpl implements PaymentDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(payment);
+            Payment paymentToDelete = em.find(Payment.class, payment.getId());
+            em.remove(paymentToDelete);
             transaction.commit();
             System.out.println("Payment: " + payment.getId() + " - deleted");
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package be.intecbrussel.data.implementations;
 
 import be.intecbrussel.data.daos.OfficeDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
+import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Office;
 
 import javax.persistence.EntityManager;
@@ -79,7 +80,8 @@ public class OfficeDaoImpl implements OfficeDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(office);
+            Office officeToDelete = em.find(Office.class, office.getOfficeCode());
+            em.remove(officeToDelete);
             transaction.commit();
             System.out.println("Office: " + office.getOfficeCode() + " - deleted");
         } catch (Exception e) {

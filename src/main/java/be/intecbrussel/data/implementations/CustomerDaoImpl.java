@@ -8,6 +8,7 @@ import be.intecbrussel.entities.Employee;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +81,10 @@ public class CustomerDaoImpl implements CustomerDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(customer);
+            Customer customerToDelete = em.find(Customer.class, customer.getCustomerNumber());
+            em.remove(customerToDelete);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerNumber() + " - deleted");
+//            System.out.println("Customer: " + customer.getCustomerNumber() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

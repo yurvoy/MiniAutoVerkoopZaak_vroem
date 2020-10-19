@@ -52,7 +52,7 @@ public class TestApp {
         productLineDAO.createProductLine(newProductLine);
 
         // Print created entities
-        System.out.println("### ENTITIES TO UPDATE ###");
+        System.out.println("\n### ENTITIES TO UPDATE ###");
         System.out.println(customerDao.readCustomer(101));
         System.out.println(employeeDAO.readEmployee(1001));
         System.out.println(officeDAO.readOffice("8"));
@@ -107,7 +107,7 @@ public class TestApp {
         newCustomer.setSalesRepEmployeeNumber(newEmployee);
         customerDao.updateCustomer(newCustomer);
 
-        System.out.println("### ENTITIES UPDATED ###");
+        System.out.println("\n### ENTITIES UPDATED ###");
         System.out.println(customerDao.readCustomer(101));
         System.out.println(employeeDAO.readEmployee(1001));
         System.out.println(officeDAO.readOffice("8"));
@@ -118,13 +118,13 @@ public class TestApp {
 
 
         // Delete entities
-        customerDao.deleteCustomer(customerDao.readCustomer(101));
-        employeeDAO.deleteEmployee(employeeDAO.readEmployee(1001));
-        officeDAO.deleteOffice(officeDAO.readOffice("8"));
-        orderDAO.deleteOrder(orderDAO.readOrder(10099));
-        paymentDAO.deletePayment(paymentDAO.readPayment(newPK));
-        productDAO.deleteProduct(productDAO.readProduct("S33_1986"));
-        productLineDAO.deleteProductLine(productLineDAO.readProductLine("Bike"));
+        customerDao.deleteCustomer(newCustomer);
+//        employeeDAO.deleteEmployee(newEmployee);
+//        officeDAO.deleteOffice(newOffice);
+//        orderDAO.deleteOrder(newOrder);
+//        paymentDAO.deletePayment(newPayment);
+//        productDAO.deleteProduct(newProduct);
+//        productLineDAO.deleteProductLine(newProductLine);
 
     }
 }

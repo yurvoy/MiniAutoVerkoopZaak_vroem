@@ -80,7 +80,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(employee);
+            Employee employeeToDelete = em.find(Employee.class, employee.getEmployeeNumber());
+            em.remove(employeeToDelete);
             transaction.commit();
             System.out.println("Employee: " + employee.getEmployeeNumber() + " - deleted");
         } catch (Exception e) {

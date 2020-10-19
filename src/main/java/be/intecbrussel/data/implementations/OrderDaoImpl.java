@@ -2,6 +2,7 @@ package be.intecbrussel.data.implementations;
 
 import be.intecbrussel.data.daos.OrderDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
+import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Office;
 import be.intecbrussel.entities.Order;
 
@@ -81,7 +82,8 @@ public class OrderDaoImpl implements OrderDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(order);
+            Order orderToDelete = em.find(Order.class, order.getOrderNumber());
+            em.remove(orderToDelete);
             transaction.commit();
             System.out.println("Order: " + order.getOrderNumber() + " - deleted");
         } catch (Exception e) {

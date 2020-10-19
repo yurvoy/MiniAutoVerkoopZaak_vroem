@@ -2,6 +2,7 @@ package be.intecbrussel.entities.pk;
 
 import be.intecbrussel.entities.Customer;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

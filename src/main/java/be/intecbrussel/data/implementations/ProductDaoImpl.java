@@ -2,6 +2,7 @@ package be.intecbrussel.data.implementations;
 
 import be.intecbrussel.data.daos.ProductDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
+import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Product;
 
 import javax.persistence.EntityManager;
@@ -79,7 +80,8 @@ public class ProductDaoImpl implements ProductDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(product);
+            Product productToDelete = em.find(Product.class, product.getProductCode());
+            em.remove(productToDelete);
             transaction.commit();
             System.out.println("Product: " + product.getProductCode() + " - deleted");
         } catch (Exception e) {
