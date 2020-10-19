@@ -22,10 +22,6 @@ public class OrderDetailPK implements Serializable {
     public OrderDetailPK() {
     }
 
-    public OrderDetailPK(Product product, Order order) {
-        this.product = product;
-        this.order = order;
-    }
 
     @Override
     public boolean equals(Object o) {

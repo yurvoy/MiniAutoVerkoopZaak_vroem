@@ -63,7 +63,6 @@ public class OfficeDaoImpl implements OfficeDAO {
             em.merge(office);
             transaction.commit();
             System.out.println("Office: " + office.getOfficeCode() + " - updated");
-            System.out.println(office);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

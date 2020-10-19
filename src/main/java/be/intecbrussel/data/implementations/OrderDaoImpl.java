@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDAO {
             transaction.begin();
             if (em.find(Order.class, order.getOrderNumber()) == null){
                 em.persist(order);
-                System.out.println("Office: " + order.getOrderNumber() + " - created");
+                System.out.println("Order: " + order.getOrderNumber() + " - created");
             } else {
                 em.merge(order);
             }
@@ -65,7 +65,6 @@ public class OrderDaoImpl implements OrderDAO {
             em.merge(order);
             transaction.commit();
             System.out.println("Order: " + order.getOrderNumber() + " - updated");
-            System.out.println(order);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -46,11 +46,10 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
+        return "[Payment]" +
                 "id=" + id +
                 ", paymentDate=" + paymentDate +
-                ", amount=" + amount +
-                '}';
+                ", amount=" + amount;
     }
 
     @Override

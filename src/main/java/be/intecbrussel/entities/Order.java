@@ -71,6 +71,14 @@ public class Order {
         this.comments = comments;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "[Order]" +

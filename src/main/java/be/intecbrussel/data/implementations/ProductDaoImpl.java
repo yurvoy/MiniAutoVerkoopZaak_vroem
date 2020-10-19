@@ -62,7 +62,7 @@ public class ProductDaoImpl implements ProductDAO {
             transaction.begin();
             em.merge(product);
             transaction.commit();
-            System.out.println("Office: " + product.getProductCode() + " - updated");
+            System.out.println("Product: " + product.getProductCode() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -81,7 +81,7 @@ public class ProductDaoImpl implements ProductDAO {
             transaction.begin();
             em.remove(product);
             transaction.commit();
-            System.out.println("Office: " + product.getProductCode() + " - deleted");
+            System.out.println("Product: " + product.getProductCode() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
