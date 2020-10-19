@@ -1,10 +1,10 @@
-package be.intecbrussel.data;
+package be.intecbrussel.data.daos;
 
 import be.intecbrussel.entities.Customer;
 
 import java.util.List;
 
-public interface CustomerDAO {
+public interface CustomerDAO  {
 
     void createCustomer(Customer customer);
     Customer readCustomer(int customerId);

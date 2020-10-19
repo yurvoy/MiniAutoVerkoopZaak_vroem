@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String productCode;
     private String productName;
     private String productScale;

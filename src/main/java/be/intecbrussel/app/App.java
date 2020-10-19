@@ -1,12 +1,11 @@
 package be.intecbrussel.app;
 
-import be.intecbrussel.data.CustomerDAO;
-import be.intecbrussel.data.CustomerDaoImpl;
-import be.intecbrussel.data.EmployeeDAO;
-import be.intecbrussel.data.EmployeeDaoImpl;
+import be.intecbrussel.data.daos.CustomerDAO;
+import be.intecbrussel.data.implementations.CustomerDaoImpl;
+import be.intecbrussel.data.daos.EmployeeDAO;
+import be.intecbrussel.data.implementations.EmployeeDaoImpl;
 import be.intecbrussel.entities.Customer;
 import be.intecbrussel.entities.Employee;
-import be.intecbrussel.entities.Office;
 
 import java.math.BigDecimal;
 
@@ -14,7 +13,7 @@ public class App {
     public static void main(String[] args) {
 
         // Create DAOs
-        CustomerDAO customerDAO = new CustomerDaoImpl();
+        CustomerDAO CustomerDAO = new CustomerDaoImpl();
         EmployeeDAO employeeDAO = new EmployeeDaoImpl();
 
 
@@ -24,12 +23,12 @@ public class App {
         System.out.println(newEmployee);
         employeeDAO.createEmployee(newEmployee);
 
-        Customer newCustomer = customerDAO.readCustomer(103);
+        Customer newCustomer = CustomerDAO.readCustomer(103);
         newCustomer.setCustomerNumber(101);
         System.out.println(newCustomer);
-        customerDAO.createCustomer(newCustomer);
+        CustomerDAO.createCustomer(newCustomer);
 
-        System.out.println(customerDAO.readCustomer(101));
+        System.out.println(CustomerDAO.readCustomer(101));
         System.out.println(employeeDAO.readEmployee(1001));
 
 
@@ -52,9 +51,9 @@ public class App {
         newCustomer.setCountry("Belgium");
         newCustomer.setCreditLimit(BigDecimal.valueOf(100000));
         newCustomer.setSalesRepEmployeeNumber(newEmployee);
-        customerDAO.updateCustomer(newCustomer);
+        CustomerDAO.updateCustomer(newCustomer);
 
-        System.out.println(customerDAO.readCustomer(101));
+        System.out.println(CustomerDAO.readCustomer(101));
         System.out.println(employeeDAO.readEmployee(1001));
 
     }

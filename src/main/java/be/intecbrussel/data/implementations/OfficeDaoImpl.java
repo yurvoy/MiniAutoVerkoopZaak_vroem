@@ -1,7 +1,8 @@
-package be.intecbrussel.data;
+package be.intecbrussel.data.implementations;
 
+import be.intecbrussel.data.daos.OfficeDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Employee;
+import be.intecbrussel.entities.Office;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,25 +10,24 @@ import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDaoImpl implements EmployeeDAO {
+public class OfficeDaoImpl implements OfficeDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
 
-
     @Override
-    public void createEmployee(Employee employee) {
+    public void createOffice(Office office) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Employee.class, employee.getEmployeeNumber()) == null){
-                em.persist(employee);
+            if (em.find(Office.class, office.getOfficeCode()) == null){
+                em.persist(office);
             } else {
-                em.merge(employee);
+                em.merge(office);
             }
             transaction.commit();
-            if (employee != null) {
-                System.out.println("Employee: " + employee.getEmployeeNumber() + " - created");
+            if (office != null) {
+                System.out.println("Office: " + office.getOfficeCode() + " - created");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,12 +39,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     }
 
     @Override
-    public Employee readEmployee(int employeeNumber) {
-        Employee employee = new Employee();
+    public Office readOffice(int officeCode) {
+        Office office = new Office();
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            employee = em.find(Employee.class, employeeNumber);
+            office = em.find(Office.class, officeCode);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -52,19 +52,20 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 em.close();
             }
         }
-        return employee;
+        return office;
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateOffice(Office office) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.merge(employee);
+            em.merge(office);
             transaction.commit();
-            System.out.println("Employee: " + employee.getEmployeeNumber() + " - updated");
+            System.out.println("Office: " + office.getOfficeCode() + " - updated");
+            System.out.println(office);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -75,15 +76,15 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     }
 
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void deleteOffice(Office office) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(employee);
+            em.remove(office);
             transaction.commit();
-            System.out.println("Employee: " + employee.getEmployeeNumber() + " - deleted");
+            System.out.println("Office: " + office.getOfficeCode() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -94,12 +95,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     }
 
     @Override
-    public List<Employee> readAllEmployees() {
+    public List<Office> readAllOffices() {
         EntityManager em = null;
-        List<Employee> employeesList = new ArrayList<>();
+        List<Office> officesList = new ArrayList<>();
         try {
             em = emf.createEntityManager();
-            employeesList = em.createQuery("SELECT e FROM Employee e", Employee.class)
+            officesList = em.createQuery("SELECT o FROM Office o", Office.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,6 +109,6 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 em.close();
             }
         }
-        return employeesList;
+        return officesList;
     }
 }

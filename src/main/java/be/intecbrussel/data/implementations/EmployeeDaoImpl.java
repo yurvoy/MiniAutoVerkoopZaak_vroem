@@ -1,7 +1,8 @@
-package be.intecbrussel.data;
+package be.intecbrussel.data.implementations;
 
+import be.intecbrussel.data.daos.EmployeeDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Customer;
+import be.intecbrussel.entities.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,23 +10,26 @@ import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDaoImpl implements CustomerDAO {
+public class EmployeeDaoImpl implements EmployeeDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
 
 
     @Override
-    public void createCustomer(Customer customer) {
+    public void createEmployee(Employee employee) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.persist(customer);
-            transaction.commit();
-            if(customer != null) {
-                System.out.println("Customer: " + customer.getCustomerNumber() + " - created");
+            if (em.find(Employee.class, employee.getEmployeeNumber()) == null){
+                em.persist(employee);
+            } else {
+                em.merge(employee);
             }
-
+            transaction.commit();
+            if (employee != null) {
+                System.out.println("Employee: " + employee.getEmployeeNumber() + " - created");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -36,12 +40,12 @@ public class CustomerDaoImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer readCustomer(int customerId) {
+    public Employee readEmployee(int employeeNumber) {
+        Employee employee = new Employee();
         EntityManager em = null;
-        Customer customer = new Customer();
         try {
             em = emf.createEntityManager();
-            customer = em.find(Customer.class, customerId);
+            employee = em.find(Employee.class, employeeNumber);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -49,19 +53,19 @@ public class CustomerDaoImpl implements CustomerDAO {
                 em.close();
             }
         }
-        return customer;
+        return employee;
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateEmployee(Employee employee) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.merge(customer);
+            em.merge(employee);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerNumber() + " - updated");
+            System.out.println("Employee: " + employee.getEmployeeNumber() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -72,15 +76,15 @@ public class CustomerDaoImpl implements CustomerDAO {
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
+    public void deleteEmployee(Employee employee) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.remove(customer);
+            em.remove(employee);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerNumber() + " - deleted");
+            System.out.println("Employee: " + employee.getEmployeeNumber() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -91,12 +95,12 @@ public class CustomerDaoImpl implements CustomerDAO {
     }
 
     @Override
-    public List<Customer> readAllCustomers() {
+    public List<Employee> readAllEmployees() {
         EntityManager em = null;
-        List<Customer> customersList = new ArrayList<>();
+        List<Employee> employeesList = new ArrayList<>();
         try {
             em = emf.createEntityManager();
-            customersList = em.createQuery("SELECT c FROM Customer c", Customer.class)
+            employeesList = em.createQuery("SELECT e FROM Employee e", Employee.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,6 +109,6 @@ public class CustomerDaoImpl implements CustomerDAO {
                 em.close();
             }
         }
-        return customersList;
+        return employeesList;
     }
 }
