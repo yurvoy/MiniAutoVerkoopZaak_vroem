@@ -1,7 +1,6 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,7 +8,6 @@ import java.util.Objects;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeNumber;
     private String lastName;
     private String firstName;
@@ -17,16 +15,16 @@ public class Employee {
     private String email;
     private String jobTitle;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reportsTo")
-    private Employee employeeToReports;
+    private Employee reportsTo;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "officeCode")
-    private Office office;
+    @MapsId("officeCode")
+    private Office officeCode;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
-    private List<Customer> customersList;
+
 
     public Employee() {
         this.employeeNumber = 0;
@@ -84,28 +82,20 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
-    public Office getOffice() {
-        return office;
+    public Office getOfficeCode() {
+        return officeCode;
     }
 
-    public void setOffice(Office office) {
-        this.office = office;
+    public void setOfficeCode(Office office) {
+        this.officeCode = office;
     }
 
     public Employee getEmployeeToReport() {
-        return employeeToReports;
+        return reportsTo;
     }
 
     public void setEmployeeToReport(Employee employeeToReports) {
-        this.employeeToReports = employeeToReports;
-    }
-
-    public List<Customer> getCustomersList() {
-        return customersList;
-    }
-
-    public void setCustomersList(List<Customer> customersList) {
-        this.customersList = customersList;
+        this.reportsTo = employeeToReports;
     }
 
     @Override
@@ -130,13 +120,12 @@ public class Employee {
                 Objects.equals(extension, employee.extension) &&
                 Objects.equals(email, employee.email) &&
                 Objects.equals(jobTitle, employee.jobTitle) &&
-                Objects.equals(employeeToReports, employee.employeeToReports) &&
-                Objects.equals(office, employee.office) &&
-                Objects.equals(customersList, employee.customersList);
+                Objects.equals(reportsTo, employee.reportsTo) &&
+                Objects.equals(officeCode, employee.officeCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, employeeToReports, office, customersList);
+        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, reportsTo, officeCode);
     }
 }

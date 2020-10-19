@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerNumber;
     private String customerName;
     private String contactLastName;
@@ -22,9 +21,10 @@ public class Customer {
     private String country;
     private double creditLimit;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "salesRepEmployeeNumber")
-    private Employee employee;
+    private Employee salesRepEmployeeNumber;
+
 
     public Customer() {
     }
@@ -129,12 +129,12 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-    public Employee getEmployeeNumber() {
-        return employee;
+    public Employee getSalesRepEmployeeNumber() {
+        return salesRepEmployeeNumber;
     }
 
-    public void setEmployeeNumber(Employee employee) {
-        this.employee = employee;
+    public void setSalesRepEmployeeNumber(Employee salesRepEmployeeNumber) {
+        this.salesRepEmployeeNumber = salesRepEmployeeNumber;
     }
 
     @Override
@@ -164,11 +164,11 @@ public class Customer {
                 Objects.equals(state, customer.state) &&
                 Objects.equals(postalCode, customer.postalCode) &&
                 Objects.equals(country, customer.country) &&
-                Objects.equals(employee, customer.employee);
+                Objects.equals(salesRepEmployeeNumber, customer.salesRepEmployeeNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit, employee);
+        return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit, salesRepEmployeeNumber);
     }
 }

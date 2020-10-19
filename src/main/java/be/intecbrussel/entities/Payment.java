@@ -1,14 +1,11 @@
 package be.intecbrussel.entities;
 
-import be.intecbrussel.entities.pk.PaymentPK;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "payments")
-@IdClass(PaymentPK.class)
 public class Payment implements Serializable {
     private int customerNumber;
     private String checkNumber;

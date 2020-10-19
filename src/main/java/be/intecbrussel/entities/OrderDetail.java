@@ -1,32 +1,42 @@
 package be.intecbrussel.entities;
 
-import be.intecbrussel.entities.pk.OrderDetailPK;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "orderdetails")
-@IdClass(OrderDetailPK.class)
 public class OrderDetail implements Serializable {
-    private int orderNumber;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name =  "productCode")
+    private Product product;
+    @Id
+    @ManyToOne
+    @JoinColumn(name =  "orderNumber")
+    private Order orderNumber;
     private String productCode;
     private int quantityOrdered;
     private double priceEach;
-    private int orderLineNumber;
+    private short orderLineNumber;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getOrderNumber() {
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Order getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(int orderNumber) {
+    public void setOrderNumber(Order orderNumber) {
         this.orderNumber = orderNumber;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getProductCode() {
         return productCode;
     }
@@ -34,7 +44,6 @@ public class OrderDetail implements Serializable {
     public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
-
 
     public int getQuantityOrdered() {
         return quantityOrdered;
@@ -52,12 +61,11 @@ public class OrderDetail implements Serializable {
         this.priceEach = priceEach;
     }
 
-    public int getOrderLineNumber() {
+    public short getOrderLineNumber() {
         return orderLineNumber;
     }
 
-    public void setOrderLineNumber(int orderLineNumber) {
+    public void setOrderLineNumber(short orderLineNumber) {
         this.orderLineNumber = orderLineNumber;
     }
-
 }
