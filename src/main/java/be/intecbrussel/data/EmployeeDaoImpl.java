@@ -20,10 +20,14 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.persist(employee);
+            if (em.find(Employee.class, employee.getEmployeeNumber()) == null){
+                em.persist(employee);
+            } else {
+                em.merge(employee);
+            }
             transaction.commit();
             if (employee != null) {
-                System.out.println("Employee: " + employee.getFirstName() + " "+ employee.getLastName() + " - created");
+                System.out.println("Employee: " + employee.getEmployeeNumber() + " - created");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +64,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             transaction.begin();
             em.merge(employee);
             transaction.commit();
-            System.out.println("Customer: " + employee.getFirstName() + " "+ employee.getLastName() + " - updated");
+            System.out.println("Employee: " + employee.getEmployeeNumber() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -79,7 +83,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             transaction.begin();
             em.remove(employee);
             transaction.commit();
-            System.out.println("Customer: " + employee.getFirstName() + " "+ employee.getLastName() + " - deleted");
+            System.out.println("Employee: " + employee.getEmployeeNumber() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -23,7 +23,7 @@ public class CustomerDaoImpl implements CustomerDAO {
             em.persist(customer);
             transaction.commit();
             if(customer != null) {
-                System.out.println("Customer: " + customer.getCustomerName() + " - created");
+                System.out.println("Customer: " + customer.getCustomerNumber() + " - created");
             }
 
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class CustomerDaoImpl implements CustomerDAO {
             transaction.begin();
             em.merge(customer);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerName() + " - updated");
+            System.out.println("Customer: " + customer.getCustomerNumber() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -80,7 +80,7 @@ public class CustomerDaoImpl implements CustomerDAO {
             transaction.begin();
             em.remove(customer);
             transaction.commit();
-            System.out.println("Customer: " + customer.getCustomerName() + " - deleted");
+            System.out.println("Customer: " + customer.getCustomerNumber() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

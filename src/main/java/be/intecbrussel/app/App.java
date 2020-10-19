@@ -19,30 +19,25 @@ public class App {
 
 
         // Create entities
-//        Employee newEmployee = employeeDAO.readEmployee(1143);
-//        newEmployee.setEmployeeNumber(1001);
-//        System.out.println(newEmployee);
-//        employeeDAO.createEmployee(newEmployee);
-//
-//        Customer newCustomer = customerDAO.readCustomer(103);
-//        newCustomer.setCustomerNumber(101);
-//        System.out.println(newCustomer);
-//        customerDAO.createCustomer(newCustomer);
-//
-//        System.out.println(customerDAO.readCustomer(101));
-//        System.out.println(employeeDAO.readEmployee(1001));
+        Employee newEmployee = employeeDAO.readEmployee(1143);
+        newEmployee.setEmployeeNumber(1001);
+        System.out.println(newEmployee);
+        employeeDAO.createEmployee(newEmployee);
+
+        Customer newCustomer = customerDAO.readCustomer(103);
+        newCustomer.setCustomerNumber(101);
+        System.out.println(newCustomer);
+        customerDAO.createCustomer(newCustomer);
+
+        System.out.println(customerDAO.readCustomer(101));
+        System.out.println(employeeDAO.readEmployee(1001));
 
 
         // Update entities
-        Employee newEmployee = employeeDAO.readEmployee(1001);
-        Customer newCustomer = customerDAO.readCustomer(101);
-        Office newOffice = new Office("8");
-
         newEmployee.setFirstName("Yvonnick");
         newEmployee.setLastName("Urvoy");
         newEmployee.setEmail("yvonnick.urvoy@gmail.com");
         newEmployee.setJobTitle("Java IoT student");
-        newEmployee.setOfficeCode(newOffice);
         newEmployee.setExtension("x1986");
         employeeDAO.updateEmployee(newEmployee);
 
@@ -55,7 +50,7 @@ public class App {
         newCustomer.setPostalCode("1000");
         newCustomer.setState("Brussels region");
         newCustomer.setCountry("Belgium");
-        newCustomer.setCreditLimit(BigDecimal.valueOf(1000000000));
+        newCustomer.setCreditLimit(BigDecimal.valueOf(100000));
         newCustomer.setSalesRepEmployeeNumber(newEmployee);
         customerDAO.updateCustomer(newCustomer);
 
