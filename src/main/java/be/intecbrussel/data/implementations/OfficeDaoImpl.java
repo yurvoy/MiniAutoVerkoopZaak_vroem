@@ -22,13 +22,11 @@ public class OfficeDaoImpl implements OfficeDAO {
             transaction.begin();
             if (em.find(Office.class, office.getOfficeCode()) == null){
                 em.persist(office);
+                System.out.println("Office: " + office.getOfficeCode() + " - created");
             } else {
                 em.merge(office);
             }
             transaction.commit();
-            if (office != null) {
-                System.out.println("Office: " + office.getOfficeCode() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -39,7 +37,7 @@ public class OfficeDaoImpl implements OfficeDAO {
     }
 
     @Override
-    public Office readOffice(int officeCode) {
+    public Office readOffice(String officeCode) {
         Office office = new Office();
         EntityManager em = null;
         try {

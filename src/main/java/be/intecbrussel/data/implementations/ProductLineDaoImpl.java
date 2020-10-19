@@ -23,13 +23,11 @@ public class ProductLineDaoImpl implements ProductLineDAO {
             transaction.begin();
             if (em.find(ProductLine.class, productLine.getProductLine()) == null){
                 em.persist(productLine);
+                System.out.println("ProductLine: " + productLine.getProductLine() + " - created");
             } else {
                 em.merge(productLine);
             }
             transaction.commit();
-            if (productLine != null) {
-                System.out.println("ProductLine: " + productLine.getProductLine() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

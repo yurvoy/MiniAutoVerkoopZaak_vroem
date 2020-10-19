@@ -1,14 +1,14 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "offices")
 public class Office {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String officeCode;
+
     private String city;
     private String phone;
     private String addressLine1;
@@ -96,5 +96,40 @@ public class Office {
 
     public void setTerritory(String territory) {
         this.territory = territory;
+    }
+
+    @Override
+    public String toString() {
+        return "[Office]" +
+                "officeCode='" + officeCode + '\'' +
+                ", city='" + city + '\'' +
+                ", phone='" + phone + '\'' +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", territory='" + territory;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Office office = (Office) o;
+        return Objects.equals(officeCode, office.officeCode) &&
+                Objects.equals(city, office.city) &&
+                Objects.equals(phone, office.phone) &&
+                Objects.equals(addressLine1, office.addressLine1) &&
+                Objects.equals(addressLine2, office.addressLine2) &&
+                Objects.equals(state, office.state) &&
+                Objects.equals(country, office.country) &&
+                Objects.equals(postalCode, office.postalCode) &&
+                Objects.equals(territory, office.territory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
     }
 }

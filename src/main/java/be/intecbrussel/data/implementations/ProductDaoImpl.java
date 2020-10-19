@@ -22,13 +22,11 @@ public class ProductDaoImpl implements ProductDAO {
             transaction.begin();
             if (em.find(Product.class, product.getProductCode()) == null){
                 em.persist(product);
+                System.out.println("Product: " + product.getProductCode() + " - created");
             } else {
                 em.merge(product);
             }
             transaction.commit();
-            if (product != null) {
-                System.out.println("Product: " + product.getProductCode() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -44,7 +42,7 @@ public class ProductDaoImpl implements ProductDAO {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            product = em.find(Product.class, product);
+            product = em.find(Product.class, productCode);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

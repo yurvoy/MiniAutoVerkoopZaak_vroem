@@ -22,15 +22,13 @@ public class OrderDaoImpl implements OrderDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Office.class, order.getOrderNumber()) == null){
+            if (em.find(Order.class, order.getOrderNumber()) == null){
                 em.persist(order);
+                System.out.println("Office: " + order.getOrderNumber() + " - created");
             } else {
                 em.merge(order);
             }
             transaction.commit();
-            if (order != null) {
-                System.out.println("Office: " + order.getOrderNumber() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

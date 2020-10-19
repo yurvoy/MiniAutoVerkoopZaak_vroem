@@ -140,7 +140,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "{Customer]" +
+        return "[Customer]" +
                 " Number=" + customerNumber +
                 ", customerName='" + customerName + '\'' +
                 ", addressLine1='" + addressLine1 + '\'' +

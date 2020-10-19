@@ -23,13 +23,11 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             transaction.begin();
             if (em.find(Employee.class, employee.getEmployeeNumber()) == null){
                 em.persist(employee);
+                System.out.println("Employee: " + employee.getEmployeeNumber() + " - created");
             } else {
                 em.merge(employee);
             }
             transaction.commit();
-            if (employee != null) {
-                System.out.println("Employee: " + employee.getEmployeeNumber() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

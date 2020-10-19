@@ -1,48 +1,29 @@
 package be.intecbrussel.entities;
 
+import be.intecbrussel.entities.pk.OrderDetailPK;
+
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orderdetails")
-public class OrderDetail implements Serializable {
+public class OrderDetail {
+    @EmbeddedId
+    OrderDetailPK id;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name =  "productCode")
-    private Product product;
-    @Id
-    @ManyToOne
-    @JoinColumn(name =  "orderNumber")
-    private Order orderNumber;
-    private String productCode;
     private int quantityOrdered;
     private double priceEach;
     private short orderLineNumber;
 
-
-    public Product getProduct() {
-        return product;
+    public OrderDetail() {
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public OrderDetailPK getId() {
+        return id;
     }
 
-    public Order getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(Order orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setId(OrderDetailPK id) {
+        this.id = id;
     }
 
     public int getQuantityOrdered() {
@@ -67,5 +48,33 @@ public class OrderDetail implements Serializable {
 
     public void setOrderLineNumber(short orderLineNumber) {
         this.orderLineNumber = orderLineNumber;
+    }
+
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", quantityOrdered=" + quantityOrdered +
+                ", priceEach=" + priceEach +
+                ", orderLineNumber=" + orderLineNumber +
+                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDetail that = (OrderDetail) o;
+        return quantityOrdered == that.quantityOrdered &&
+                Double.compare(that.priceEach, priceEach) == 0 &&
+                orderLineNumber == that.orderLineNumber &&
+                Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, quantityOrdered, priceEach, orderLineNumber);
     }
 }

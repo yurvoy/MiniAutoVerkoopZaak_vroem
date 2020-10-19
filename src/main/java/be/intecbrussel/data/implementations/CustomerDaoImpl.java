@@ -21,16 +21,13 @@ public class CustomerDaoImpl implements CustomerDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Employee.class, customer.getCustomerNumber()) == null){
+            if (em.find(Customer.class, customer.getCustomerNumber()) == null){
                 em.persist(customer);
+                System.out.println("Customer: " + customer.getCustomerNumber() + " - created");
             } else {
                 em.merge(customer);
             }
             transaction.commit();
-            if(customer != null) {
-                System.out.println("Customer: " + customer.getCustomerNumber() + " - created");
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

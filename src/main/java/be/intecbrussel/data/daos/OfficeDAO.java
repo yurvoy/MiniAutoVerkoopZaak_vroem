@@ -7,7 +7,7 @@ import java.util.List;
 public interface OfficeDAO {
 
     void createOffice(Office office);
-    Office readOffice(int officeCode);
+    Office readOffice(String officeCode);
     void updateOffice(Office office);
     void deleteOffice(Office office);
     List<Office> readAllOffices();

@@ -3,6 +3,7 @@ package be.intecbrussel.data.implementations;
 import be.intecbrussel.data.daos.PaymentDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
 import be.intecbrussel.entities.Payment;
+import be.intecbrussel.entities.pk.PaymentPK;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,15 +21,13 @@ public class PaymentDaoImpl implements PaymentDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Payment.class, payment.getCheckNumber()) == null){
+            if (em.find(Payment.class, payment.getId()) == null){
                 em.persist(payment);
+                System.out.println("Payment: " + payment.getId() + " - created");
             } else {
                 em.merge(payment);
             }
             transaction.commit();
-            if (payment != null) {
-                System.out.println("Payment: " + payment.getCheckNumber() + " - created");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -39,12 +38,12 @@ public class PaymentDaoImpl implements PaymentDAO {
     }
 
     @Override
-    public Payment readPayment(String checkNumber) {
+    public Payment readPayment(PaymentPK paymentPK) {
         Payment payment = new Payment();
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            payment = em.find(Payment.class, checkNumber);
+            payment = em.find(Payment.class, paymentPK);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -64,7 +63,7 @@ public class PaymentDaoImpl implements PaymentDAO {
             transaction.begin();
             em.merge(payment);
             transaction.commit();
-            System.out.println("Payment: " + payment.getCheckNumber() + " - updated");
+            System.out.println("Payment: " + payment.getId() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -83,7 +82,7 @@ public class PaymentDaoImpl implements PaymentDAO {
             transaction.begin();
             em.remove(payment);
             transaction.commit();
-            System.out.println("Payment: " + payment.getCheckNumber() + " - deleted");
+            System.out.println("Payment: " + payment.getId() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
