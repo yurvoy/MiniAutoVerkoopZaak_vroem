@@ -132,7 +132,7 @@ public class TestApp {
         System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
 
 
-
+        newEmployee.getCustomersList().stream().forEach(System.out::println);
         // Delete entities
 //        customerDao.deleteCustomer(newCustomer);
         employeeDAO.deleteEmployee(newEmployee);

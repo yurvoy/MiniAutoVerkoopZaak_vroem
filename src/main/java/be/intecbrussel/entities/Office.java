@@ -1,8 +1,9 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "offices")
@@ -20,7 +21,7 @@ public class Office {
     private String territory;
 
     @OneToMany(mappedBy = "officeCode", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Employee> employeesList;
+    private Set<Employee> employeesList = new HashSet<>();
 
 
     public Office() {
@@ -102,11 +103,11 @@ public class Office {
         this.territory = territory;
     }
 
-    public List<Employee> getEmployeesList() {
+    public Set<Employee> getEmployeesList() {
         return employeesList;
     }
 
-    public void setEmployeeList(List<Employee> employeesList) {
+    public void setEmployeeList(Set<Employee> employeesList) {
         this.employeesList = employeesList;
     }
 
