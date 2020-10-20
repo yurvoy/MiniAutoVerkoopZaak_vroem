@@ -1,8 +1,7 @@
 package be.intecbrussel.data.implementations;
 
-import be.intecbrussel.data.daos.ProductLineDAO;
+import be.intecbrussel.data.crud_daos.ProductLineDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.ProductLine;
 
 import javax.persistence.EntityManager;

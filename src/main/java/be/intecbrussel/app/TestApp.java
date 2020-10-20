@@ -1,8 +1,9 @@
 package be.intecbrussel.app;
 
-import be.intecbrussel.data.daos.*;
+import be.intecbrussel.data.crud_daos.*;
 import be.intecbrussel.data.implementations.*;
 import be.intecbrussel.entities.*;
+import be.intecbrussel.entities.pk.OrderDetailPK;
 import be.intecbrussel.entities.pk.PaymentPK;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public class TestApp {
         EmployeeDAO employeeDAO = new EmployeeDaoImpl();
         OfficeDAO officeDAO = new OfficeDaoImpl();
         OrderDAO orderDAO = new OrderDaoImpl();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDaoImpl();
         PaymentDAO paymentDAO = new PaymentDaoImpl();
         ProductDAO productDAO = new ProductDaoImpl();
         ProductLineDAO productLineDAO = new ProductLineDaoImpl();
@@ -38,11 +40,6 @@ public class TestApp {
         newOrder.setOrderNumber(10099);
         orderDAO.createOrder(newOrder);
 
-        PaymentPK newPK = new PaymentPK(customerDao.readCustomer(103), "HQ336336");
-        Payment newPayment = paymentDAO.readPayment(newPK);
-        newPayment.setId(new PaymentPK(newCustomer, "YU121986"));
-        paymentDAO.createPayment(newPayment);
-
         Product newProduct = productDAO.readProduct("S10_1949");
         newProduct.setProductCode("S33_1986");
         productDAO.createProduct(newProduct);
@@ -51,15 +48,27 @@ public class TestApp {
         newProductLine.setProductLine("Bike");
         productLineDAO.createProductLine(newProductLine);
 
+        OrderDetailPK odPK = new OrderDetailPK(productDAO.readProduct("S18_1749"), orderDAO.readOrder(10100));
+        OrderDetail newOrderDetail = orderDetailDAO.readOrderDetail(odPK);
+        newOrderDetail.setId(new OrderDetailPK(newProduct, newOrder));
+        orderDetailDAO.createOrderDetail(newOrderDetail);
+
+        PaymentPK newPK = new PaymentPK(customerDao.readCustomer(103), "HQ336336");
+        Payment newPayment = paymentDAO.readPayment(newPK);
+        newPayment.setId(new PaymentPK(newCustomer, "YU121986"));
+        paymentDAO.createPayment(newPayment);
+
         // Print created entities
         System.out.println("\n### ENTITIES TO UPDATE ###");
         System.out.println(customerDao.readCustomer(101));
         System.out.println(employeeDAO.readEmployee(1001));
         System.out.println(officeDAO.readOffice("8"));
         System.out.println(orderDAO.readOrder(10099));
-        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
         System.out.println(productDAO.readProduct("S33_1986"));
         System.out.println(productLineDAO.readProductLine("Bike"));
+        System.out.println(orderDetailDAO.readOrderDetail(new OrderDetailPK(newProduct, newOrder)));
+        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
+
 
 
         // Update entities
@@ -71,6 +80,7 @@ public class TestApp {
         newProduct.setProductName("GRAVEL EDR OFFROAD VAN RYSEL GRX");
         newProduct.setProductVendor("Decathlon");
         newProduct.setProductDescription("Gravel bike");
+        newProduct.setProductLine(newProductLine);
         productDAO.updateProduct(newProduct);
 
         newProductLine.setHtmlDescription("https://www.decathlon.be/fr/p/velo-gravel-edr-offroad-van-rysel-grx-1x/_/R-p-327757?mc=8601607");
@@ -82,7 +92,11 @@ public class TestApp {
         newOrder.setComments("Customer needs to buy soms bikes !");
         orderDAO.updateOrder(newOrder);
 
-        newPayment.setAmount(BigDecimal.valueOf(2000));
+        newOrderDetail.setPriceEach(2000);
+        newOrderDetail.setQuantityOrdered(12);
+        orderDetailDAO.updateOrderDetail(newOrderDetail);
+
+        newPayment.setAmount(BigDecimal.valueOf(24000));
         newPayment.setPaymentDate(LocalDate.ofEpochDay(19-10-2020));
         paymentDAO.updatePayment(newPayment);
 
@@ -112,14 +126,16 @@ public class TestApp {
         System.out.println(employeeDAO.readEmployee(1001));
         System.out.println(officeDAO.readOffice("8"));
         System.out.println(orderDAO.readOrder(10099));
-        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
         System.out.println(productDAO.readProduct("S33_1986"));
         System.out.println(productLineDAO.readProductLine("Bike"));
+        System.out.println(orderDetailDAO.readOrderDetail(new OrderDetailPK(newProduct, newOrder)));
+        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
+
 
 
         // Delete entities
-        customerDao.deleteCustomer(newCustomer);
-//        employeeDAO.deleteEmployee(newEmployee);
+//        customerDao.deleteCustomer(newCustomer);
+        employeeDAO.deleteEmployee(newEmployee);
 //        officeDAO.deleteOffice(newOffice);
 //        orderDAO.deleteOrder(newOrder);
 //        paymentDAO.deletePayment(newPayment);

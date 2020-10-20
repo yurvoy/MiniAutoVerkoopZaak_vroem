@@ -1,8 +1,7 @@
 package be.intecbrussel.data.implementations;
 
-import be.intecbrussel.data.daos.PaymentDAO;
+import be.intecbrussel.data.crud_daos.PaymentDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Employee;
 import be.intecbrussel.entities.Payment;
 import be.intecbrussel.entities.pk.PaymentPK;
 

@@ -1,6 +1,7 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,10 +20,13 @@ public class Employee {
     @JoinColumn(name = "reportsTo")
     private Employee reportsTo;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "officeCode")
     @MapsId("officeCode")
     private Office officeCode;
+
+    @OneToMany(mappedBy = "salesRepEmployeeNumber", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Customer> customersList;
 
 
 
@@ -90,12 +94,20 @@ public class Employee {
         this.officeCode = office;
     }
 
-    public Employee getEmployeeToReport() {
+    public Employee getReportsTo() {
         return reportsTo;
     }
 
-    public void setEmployeeToReport(Employee employeeToReports) {
-        this.reportsTo = employeeToReports;
+    public void setReportsTo(Employee reportsTo) {
+        this.reportsTo = reportsTo;
+    }
+
+    public List<Customer> getCustomersList() {
+        return customersList;
+    }
+
+    public void setCustomersList(List<Customer> customersList) {
+        this.customersList = customersList;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package be.intecbrussel.data.implementations;
 
-import be.intecbrussel.data.daos.OrderDAO;
+import be.intecbrussel.data.crud_daos.OrderDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Employee;
-import be.intecbrussel.entities.Office;
 import be.intecbrussel.entities.Order;
 
 import javax.persistence.EntityManager;
@@ -14,7 +12,6 @@ import java.util.List;
 
 public class OrderDaoImpl implements OrderDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
-
 
     @Override
     public void createOrder(Order order) {

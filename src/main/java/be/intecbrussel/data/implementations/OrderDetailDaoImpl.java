@@ -1,8 +1,9 @@
 package be.intecbrussel.data.implementations;
 
-import be.intecbrussel.data.crud_daos.OfficeDAO;
+import be.intecbrussel.data.crud_daos.OrderDetailDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.Office;
+import be.intecbrussel.entities.OrderDetail;
+import be.intecbrussel.entities.pk.OrderDetailPK;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,21 +11,21 @@ import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfficeDaoImpl implements OfficeDAO {
+public class OrderDetailDaoImpl implements OrderDetailDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
 
     @Override
-    public void createOffice(Office office) {
+    public void createOrderDetail(OrderDetail orderDetail) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Office.class, office.getOfficeCode()) == null){
-                em.persist(office);
-                System.out.println("Office: " + office.getOfficeCode() + " - created");
+            if (em.find(OrderDetail.class, orderDetail.getId()) == null){
+                em.persist(orderDetail);
+                System.out.println("OrderDetail: " + orderDetail.getId() + " - created");
             } else {
-                em.merge(office);
+                em.merge(orderDetail);
             }
             transaction.commit();
         } catch (Exception e) {
@@ -37,12 +38,12 @@ public class OfficeDaoImpl implements OfficeDAO {
     }
 
     @Override
-    public Office readOffice(String officeCode) {
-        Office office = new Office();
+    public OrderDetail readOrderDetail(OrderDetailPK orderDetailPK) {
+        OrderDetail orderDetail = new OrderDetail();
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            office = em.find(Office.class, officeCode);
+            orderDetail = em.find(OrderDetail.class, orderDetailPK);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -50,19 +51,19 @@ public class OfficeDaoImpl implements OfficeDAO {
                 em.close();
             }
         }
-        return office;
+        return orderDetail;
     }
 
     @Override
-    public void updateOffice(Office office) {
+    public void updateOrderDetail(OrderDetail orderDetail) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            em.merge(office);
+            em.merge(orderDetail);
             transaction.commit();
-            System.out.println("Office: " + office.getOfficeCode() + " - updated");
+            System.out.println("OrderDetail: " + orderDetail.getId() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -73,16 +74,16 @@ public class OfficeDaoImpl implements OfficeDAO {
     }
 
     @Override
-    public void deleteOffice(Office office) {
+    public void deleteOrderDetail(OrderDetail orderDetail) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            Office officeToDelete = em.find(Office.class, office.getOfficeCode());
-            em.remove(officeToDelete);
+            OrderDetail orderDetailToDelete = em.find(OrderDetail.class, orderDetail.getId());
+            em.remove(orderDetailToDelete);
             transaction.commit();
-            System.out.println("Office: " + office.getOfficeCode() + " - deleted");
+            System.out.println("OrderDetail: " + orderDetail.getId() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -93,12 +94,12 @@ public class OfficeDaoImpl implements OfficeDAO {
     }
 
     @Override
-    public List<Office> readAllOffices() {
+    public List<OrderDetail> readAllOrderDetails() {
         EntityManager em = null;
-        List<Office> officesList = new ArrayList<>();
+        List<OrderDetail> orderDetailsList = new ArrayList<>();
         try {
             em = emf.createEntityManager();
-            officesList = em.createQuery("SELECT o FROM Office o", Office.class)
+            orderDetailsList = em.createQuery("SELECT o FROM OrderDetail o", OrderDetail.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,6 +108,6 @@ public class OfficeDaoImpl implements OfficeDAO {
                 em.close();
             }
         }
-        return officesList;
+        return orderDetailsList;
     }
 }

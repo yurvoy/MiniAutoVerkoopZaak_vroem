@@ -1,14 +1,12 @@
 package be.intecbrussel.data.implementations;
 
-import be.intecbrussel.data.daos.CustomerDAO;
+import be.intecbrussel.data.crud_daos.CustomerDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
 import be.intecbrussel.entities.Customer;
-import be.intecbrussel.entities.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 

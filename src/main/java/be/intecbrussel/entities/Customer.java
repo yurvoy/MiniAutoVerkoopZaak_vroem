@@ -22,7 +22,7 @@ public class Customer {
     private String country;
     private BigDecimal creditLimit;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "salesRepEmployeeNumber")
     private Employee salesRepEmployeeNumber;
 

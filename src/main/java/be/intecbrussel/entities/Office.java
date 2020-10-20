@@ -1,6 +1,7 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,9 @@ public class Office {
     private String country;
     private String postalCode;
     private String territory;
+
+    @OneToMany(mappedBy = "officeCode", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Employee> employeesList;
 
 
     public Office() {
@@ -97,6 +101,15 @@ public class Office {
     public void setTerritory(String territory) {
         this.territory = territory;
     }
+
+    public List<Employee> getEmployeesList() {
+        return employeesList;
+    }
+
+    public void setEmployeeList(List<Employee> employeesList) {
+        this.employeesList = employeesList;
+    }
+
 
     @Override
     public String toString() {

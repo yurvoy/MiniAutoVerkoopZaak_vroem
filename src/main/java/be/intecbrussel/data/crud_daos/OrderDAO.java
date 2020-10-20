@@ -1,4 +1,4 @@
-package be.intecbrussel.data.daos;
+package be.intecbrussel.data.crud_daos;
 
 import be.intecbrussel.entities.Order;
 
