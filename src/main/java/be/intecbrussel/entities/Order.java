@@ -20,7 +20,6 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerNumber")
     private Customer customer;
-    private int customerNumber;
     private Collection<OrderDetail> orderdetails;
 
     public Order() {
@@ -54,16 +53,6 @@ public class Order {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "customerNumber", referencedColumnName = "customerNumber", nullable = false)
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     @Override
@@ -105,14 +94,14 @@ public class Order {
         this.orderdetails = orderdetails;
     }
 
-    @Basic
-    @Column(name = "customerNumber", nullable = false)
-    public int getCustomerNumber() {
-        return customerNumber;
+    @ManyToOne
+    @JoinColumn(name = "customerNumber", referencedColumnName = "customerNumber", nullable = false)
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
 }

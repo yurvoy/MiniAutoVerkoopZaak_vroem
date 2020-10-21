@@ -86,7 +86,6 @@ public class TestApp {
         newProductLine.setTextDescription("100% carbon");
         productLineDAO.updateProductLine(newProductLine);
 
-        newOrder.setCustomer(customerDao.readCustomer(101));
         newOrder.setComments("Customer needs to buy soms bikes !");
         orderDAO.updateOrder(newOrder);
 

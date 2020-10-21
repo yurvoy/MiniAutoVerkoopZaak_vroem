@@ -8,23 +8,12 @@ import java.util.Objects;
 @Table(name = "orderdetails", schema = "classicmodels", catalog = "")
 @IdClass(OrderDetailPK.class)
 public class OrderDetail {
-    private int orderNumber;
     private String productCode;
     private int quantityOrdered;
     private BigDecimal priceEach;
     private short orderLineNumber;
     private Order order;
     private Product product;
-
-    @Id
-    @Column(name = "orderNumber", nullable = false)
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
-    }
 
     @Id
     @Column(name = "productCode", nullable = false, length = 15)
@@ -67,11 +56,23 @@ public class OrderDetail {
     }
 
     @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "productCode='" + productCode + '\'' +
+                ", quantityOrdered=" + quantityOrdered +
+                ", priceEach=" + priceEach +
+                ", orderLineNumber=" + orderLineNumber +
+                ", order=" + order.getOrderNumber() +
+                ", product=" + product +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetail that = (OrderDetail) o;
-        return orderNumber == that.orderNumber &&
+        return order == that.order &&
                 quantityOrdered == that.quantityOrdered &&
                 orderLineNumber == that.orderLineNumber &&
                 Objects.equals(productCode, that.productCode) &&
@@ -80,7 +81,7 @@ public class OrderDetail {
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber);
+        return Objects.hash(order, productCode, quantityOrdered, priceEach, orderLineNumber);
     }
 
     @ManyToOne
