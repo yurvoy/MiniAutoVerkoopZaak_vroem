@@ -92,21 +92,4 @@ public class CustomerDaoImpl implements CustomerDAO {
         }
     }
 
-    @Override
-    public List<Customer> readAllCustomers() {
-        EntityManager em = null;
-        List<Customer> customersList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            customersList = em.createQuery("SELECT c FROM Customer c", Customer.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return customersList;
-    }
 }

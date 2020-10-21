@@ -4,13 +4,28 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <!-- Define persistence unit -->
     <persistence-unit name="vroem-persistence-unit" transaction-type="RESOURCE_LOCAL">
+        <class>be.intecbrussel.entities.Customer</class>
+        <class>be.intecbrussel.entities.Employee</class>
+        <class>be.intecbrussel.entities.Office</class>
+        <class>be.intecbrussel.entities.OrderDetail</class>
+        <class>be.intecbrussel.entities.Order</class>
+        <class>be.intecbrussel.entities.Payment</class>
+        <class>be.intecbrussel.entities.ProductLine</class>
+        <class>be.intecbrussel.entities.Product</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/classicmodels?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="Bitch1212!"/>
-            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+<!--            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <!-- SQL logs -->
+<!--            <property name="hibernate.show_sql" value="true"/>-->
+<!--            <property name="hibernate.format_sql" value="true"/>-->
         </properties>
+
     </persistence-unit>
+
 </persistence>

@@ -2,10 +2,11 @@ package be.intecbrussel.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers", schema = "classicmodels", catalog = "")
 public class Customer {
 
     @Id
@@ -20,20 +21,19 @@ public class Customer {
     private String state;
     private String postalCode;
     private String country;
-    private BigDecimal creditLimit;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "salesRepEmployeeNumber")
     private Employee salesRepEmployeeNumber;
-
+    private BigDecimal creditLimit;
+    private Employee salesRep;
+    private Collection<Order> ordersByCustomerNumber;
+    private Collection<Payment> paymentsByCustomerNumber;
 
     public Customer() {
     }
 
-    public Customer(int customerNumber) {
-        this.customerNumber = customerNumber;
-    }
-
+    @Id
+    @Column(name = "customerNumber", nullable = false)
     public int getCustomerNumber() {
         return customerNumber;
     }
@@ -42,6 +42,8 @@ public class Customer {
         this.customerNumber = customerNumber;
     }
 
+    @Basic
+    @Column(name = "customerName", nullable = false, length = 50)
     public String getCustomerName() {
         return customerName;
     }
@@ -50,6 +52,8 @@ public class Customer {
         this.customerName = customerName;
     }
 
+    @Basic
+    @Column(name = "contactLastName", nullable = false, length = 50)
     public String getContactLastName() {
         return contactLastName;
     }
@@ -58,6 +62,8 @@ public class Customer {
         this.contactLastName = contactLastName;
     }
 
+    @Basic
+    @Column(name = "contactFirstName", nullable = false, length = 50)
     public String getContactFirstName() {
         return contactFirstName;
     }
@@ -66,6 +72,8 @@ public class Customer {
         this.contactFirstName = contactFirstName;
     }
 
+    @Basic
+    @Column(name = "phone", nullable = false, length = 50)
     public String getPhone() {
         return phone;
     }
@@ -74,6 +82,8 @@ public class Customer {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "addressLine1", nullable = false, length = 50)
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -82,6 +92,8 @@ public class Customer {
         this.addressLine1 = addressLine1;
     }
 
+    @Basic
+    @Column(name = "addressLine2", nullable = true, length = 50)
     public String getAddressLine2() {
         return addressLine2;
     }
@@ -90,6 +102,8 @@ public class Customer {
         this.addressLine2 = addressLine2;
     }
 
+    @Basic
+    @Column(name = "city", nullable = false, length = 50)
     public String getCity() {
         return city;
     }
@@ -98,6 +112,8 @@ public class Customer {
         this.city = city;
     }
 
+    @Basic
+    @Column(name = "state", nullable = true, length = 50)
     public String getState() {
         return state;
     }
@@ -106,6 +122,8 @@ public class Customer {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "postalCode", nullable = true, length = 15)
     public String getPostalCode() {
         return postalCode;
     }
@@ -114,6 +132,8 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
+    @Basic
+    @Column(name = "country", nullable = false, length = 50)
     public String getCountry() {
         return country;
     }
@@ -122,6 +142,8 @@ public class Customer {
         this.country = country;
     }
 
+    @Basic
+    @Column(name = "creditLimit", nullable = true, precision = 2)
     public BigDecimal getCreditLimit() {
         return creditLimit;
     }
@@ -130,13 +152,6 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-    public Employee getSalesRepEmployeeNumber() {
-        return salesRepEmployeeNumber;
-    }
-
-    public void setSalesRepEmployeeNumber(Employee salesRepEmployeeNumber) {
-        this.salesRepEmployeeNumber = salesRepEmployeeNumber;
-    }
 
     @Override
     public String toString() {
@@ -171,5 +186,33 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit, salesRepEmployeeNumber);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "salesRepEmployeeNumber", referencedColumnName = "employeeNumber")
+    public Employee getSalesRep() {
+        return salesRep;
+    }
+
+    public void setSalesRep(Employee salesRep) {
+        this.salesRep = salesRep;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    public Collection<Order> getOrdersByCustomerNumber() {
+        return ordersByCustomerNumber;
+    }
+
+    public void setOrdersByCustomerNumber(Collection<Order> ordersByCustomerNumber) {
+        this.ordersByCustomerNumber = ordersByCustomerNumber;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    public Collection<Payment> getPaymentsByCustomerNumber() {
+        return paymentsByCustomerNumber;
+    }
+
+    public void setPaymentsByCustomerNumber(Collection<Payment> paymentsByCustomerNumber) {
+        this.paymentsByCustomerNumber = paymentsByCustomerNumber;
     }
 }

@@ -1,16 +1,14 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "offices")
+@Table(name = "offices", schema = "classicmodels", catalog = "")
 public class Office {
     @Id
     private String officeCode;
-
     private String city;
     private String phone;
     private String addressLine1;
@@ -19,18 +17,13 @@ public class Office {
     private String country;
     private String postalCode;
     private String territory;
-
-    @OneToMany(mappedBy = "officeCode", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Employee> employeesList = new HashSet<>();
-
+    private Collection<Employee> employeesByOfficeCode;
 
     public Office() {
     }
 
-    public Office(String officeCode) {
-        this.officeCode = officeCode;
-    }
-
+    @Id
+    @Column(name = "officeCode", nullable = false, length = 10)
     public String getOfficeCode() {
         return officeCode;
     }
@@ -39,6 +32,8 @@ public class Office {
         this.officeCode = officeCode;
     }
 
+    @Basic
+    @Column(name = "city", nullable = false, length = 50)
     public String getCity() {
         return city;
     }
@@ -47,6 +42,8 @@ public class Office {
         this.city = city;
     }
 
+    @Basic
+    @Column(name = "phone", nullable = false, length = 50)
     public String getPhone() {
         return phone;
     }
@@ -55,6 +52,8 @@ public class Office {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "addressLine1", nullable = false, length = 50)
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -63,6 +62,8 @@ public class Office {
         this.addressLine1 = addressLine1;
     }
 
+    @Basic
+    @Column(name = "addressLine2", nullable = true, length = 50)
     public String getAddressLine2() {
         return addressLine2;
     }
@@ -71,6 +72,8 @@ public class Office {
         this.addressLine2 = addressLine2;
     }
 
+    @Basic
+    @Column(name = "state", nullable = true, length = 50)
     public String getState() {
         return state;
     }
@@ -79,6 +82,8 @@ public class Office {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "country", nullable = false, length = 50)
     public String getCountry() {
         return country;
     }
@@ -87,6 +92,8 @@ public class Office {
         this.country = country;
     }
 
+    @Basic
+    @Column(name = "postalCode", nullable = false, length = 15)
     public String getPostalCode() {
         return postalCode;
     }
@@ -95,6 +102,8 @@ public class Office {
         this.postalCode = postalCode;
     }
 
+    @Basic
+    @Column(name = "territory", nullable = false, length = 10)
     public String getTerritory() {
         return territory;
     }
@@ -102,15 +111,6 @@ public class Office {
     public void setTerritory(String territory) {
         this.territory = territory;
     }
-
-    public Set<Employee> getEmployeesList() {
-        return employeesList;
-    }
-
-    public void setEmployeeList(Set<Employee> employeesList) {
-        this.employeesList = employeesList;
-    }
-
 
     @Override
     public String toString() {
@@ -145,5 +145,14 @@ public class Office {
     @Override
     public int hashCode() {
         return Objects.hash(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
+    }
+
+    @OneToMany(mappedBy = "office")
+    public Collection<Employee> getEmployeesByOfficeCode() {
+        return employeesByOfficeCode;
+    }
+
+    public void setEmployeesByOfficeCode(Collection<Employee> employeesByOfficeCode) {
+        this.employeesByOfficeCode = employeesByOfficeCode;
     }
 }

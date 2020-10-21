@@ -3,13 +3,11 @@ package be.intecbrussel.data.implementations;
 import be.intecbrussel.data.crud_daos.OrderDetailDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
 import be.intecbrussel.entities.OrderDetail;
-import be.intecbrussel.entities.pk.OrderDetailPK;
+import be.intecbrussel.entities.OrderDetailPK;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderDetailDaoImpl implements OrderDetailDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
@@ -21,9 +19,9 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(OrderDetail.class, orderDetail.getId()) == null){
+            if (em.find(OrderDetail.class, orderDetail.getOrderNumber()) == null){
                 em.persist(orderDetail);
-                System.out.println("OrderDetail: " + orderDetail.getId() + " - created");
+                System.out.println("OrderDetail: " + orderDetail.getOrderNumber() + " - created");
             } else {
                 em.merge(orderDetail);
             }
@@ -63,7 +61,7 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
             transaction.begin();
             em.merge(orderDetail);
             transaction.commit();
-            System.out.println("OrderDetail: " + orderDetail.getId() + " - updated");
+            System.out.println("OrderDetail: " + orderDetail.getOrderNumber() + " - updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -80,10 +78,10 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            OrderDetail orderDetailToDelete = em.find(OrderDetail.class, orderDetail.getId());
+            OrderDetail orderDetailToDelete = em.find(OrderDetail.class, orderDetail.getOrderNumber());
             em.remove(orderDetailToDelete);
             transaction.commit();
-            System.out.println("OrderDetail: " + orderDetail.getId() + " - deleted");
+            System.out.println("OrderDetail: " + orderDetail.getOrderNumber() + " - deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -93,21 +91,4 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
         }
     }
 
-    @Override
-    public List<OrderDetail> readAllOrderDetails() {
-        EntityManager em = null;
-        List<OrderDetail> orderDetailsList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            orderDetailsList = em.createQuery("SELECT o FROM OrderDetail o", OrderDetail.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return orderDetailsList;
-    }
 }

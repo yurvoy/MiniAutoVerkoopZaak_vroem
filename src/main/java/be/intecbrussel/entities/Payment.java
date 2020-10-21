@@ -1,32 +1,25 @@
 package be.intecbrussel.entities;
 
-import be.intecbrussel.entities.pk.PaymentPK;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "payments", schema = "classicmodels", catalog = "")
+@IdClass(PaymentPK.class)
 public class Payment {
-    @EmbeddedId
-    PaymentPK id;
-
     private LocalDate paymentDate;
     private BigDecimal amount;
+    private int customerNumber;
+    private String checkNumber;
+    private Customer customer;
 
     public Payment() {
     }
 
-    public PaymentPK getId() {
-        return id;
-    }
-
-    public void setId(PaymentPK id) {
-        this.id = id;
-    }
-
+    @Basic
+    @Column(name = "paymentDate", nullable = false)
     public LocalDate getPaymentDate() {
         return paymentDate;
     }
@@ -35,6 +28,8 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
+    @Basic
+    @Column(name = "amount", nullable = false, precision = 2)
     public BigDecimal getAmount() {
         return amount;
     }
@@ -43,13 +38,15 @@ public class Payment {
         this.amount = amount;
     }
 
-
     @Override
     public String toString() {
-        return "[Payment]" +
-                "id=" + id +
-                ", paymentDate=" + paymentDate +
-                ", amount=" + amount;
+        return "Payment{" +
+                "paymentDate=" + paymentDate +
+                ", amount=" + amount +
+                ", customerNumber=" + customerNumber +
+                ", checkNumber='" + checkNumber + '\'' +
+                ", customer=" + customer +
+                '}';
     }
 
     @Override
@@ -57,14 +54,46 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id) &&
+        return customerNumber == payment.customerNumber &&
                 Objects.equals(paymentDate, payment.paymentDate) &&
-                Objects.equals(amount, payment.amount);
+                Objects.equals(amount, payment.amount) &&
+                Objects.equals(checkNumber, payment.checkNumber) &&
+                Objects.equals(customer, payment.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentDate, amount);
+        return Objects.hash(paymentDate, amount, customerNumber, checkNumber, customer);
+    }
+
+    @Id
+    @Column(name = "customerNumber", nullable = false)
+    public int getCustomerNumber() {
+        return customerNumber;
+    }
+
+    public void setCustomerNumber(int customerNumber) {
+        this.customerNumber = customerNumber;
+    }
+
+    @Id
+    @Column(name = "checkNumber", nullable = false, length = 50)
+    public String getCheckNumber() {
+        return checkNumber;
+    }
+
+    public void setCheckNumber(String checkNumber) {
+        this.checkNumber = checkNumber;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "customerNumber", referencedColumnName = "customerNumber", nullable = false)
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
 

@@ -7,8 +7,7 @@ import be.intecbrussel.entities.Office;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class OfficeDaoImpl implements OfficeDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
@@ -92,21 +91,4 @@ public class OfficeDaoImpl implements OfficeDAO {
         }
     }
 
-    @Override
-    public List<Office> readAllOffices() {
-        EntityManager em = null;
-        List<Office> officesList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            officesList = em.createQuery("SELECT o FROM Office o", Office.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return officesList;
-    }
 }

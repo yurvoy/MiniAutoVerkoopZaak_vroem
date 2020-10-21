@@ -1,31 +1,43 @@
 package be.intecbrussel.entities;
 
-import be.intecbrussel.entities.pk.OrderDetailPK;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "orderdetails")
+@Table(name = "orderdetails", schema = "classicmodels", catalog = "")
+@IdClass(OrderDetailPK.class)
 public class OrderDetail {
-    @EmbeddedId
-    OrderDetailPK id;
-
+    private int orderNumber;
+    private String productCode;
     private int quantityOrdered;
-    private double priceEach;
+    private BigDecimal priceEach;
     private short orderLineNumber;
+    private Order order;
+    private Product product;
 
-    public OrderDetail() {
+    @Id
+    @Column(name = "orderNumber", nullable = false)
+    public int getOrderNumber() {
+        return orderNumber;
     }
 
-    public OrderDetailPK getId() {
-        return id;
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
-    public void setId(OrderDetailPK id) {
-        this.id = id;
+    @Id
+    @Column(name = "productCode", nullable = false, length = 15)
+    public String getProductCode() {
+        return productCode;
     }
 
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    @Basic
+    @Column(name = "quantityOrdered", nullable = false)
     public int getQuantityOrdered() {
         return quantityOrdered;
     }
@@ -34,14 +46,18 @@ public class OrderDetail {
         this.quantityOrdered = quantityOrdered;
     }
 
-    public double getPriceEach() {
+    @Basic
+    @Column(name = "priceEach", nullable = false, precision = 2)
+    public BigDecimal getPriceEach() {
         return priceEach;
     }
 
-    public void setPriceEach(double priceEach) {
+    public void setPriceEach(BigDecimal priceEach) {
         this.priceEach = priceEach;
     }
 
+    @Basic
+    @Column(name = "orderLineNumber", nullable = false)
     public short getOrderLineNumber() {
         return orderLineNumber;
     }
@@ -50,30 +66,40 @@ public class OrderDetail {
         this.orderLineNumber = orderLineNumber;
     }
 
-
-    @Override
-    public String toString() {
-        return "[OrderDetail]" +
-                "id=" + id +
-                ", quantityOrdered=" + quantityOrdered +
-                ", priceEach=" + priceEach +
-                ", orderLineNumber=" + orderLineNumber;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetail that = (OrderDetail) o;
-        return quantityOrdered == that.quantityOrdered &&
-                Double.compare(that.priceEach, priceEach) == 0 &&
+        return orderNumber == that.orderNumber &&
+                quantityOrdered == that.quantityOrdered &&
                 orderLineNumber == that.orderLineNumber &&
-                Objects.equals(id, that.id);
+                Objects.equals(productCode, that.productCode) &&
+                Objects.equals(priceEach, that.priceEach);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantityOrdered, priceEach, orderLineNumber);
+        return Objects.hash(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "orderNumber", referencedColumnName = "orderNumber", nullable = false)
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productCode", referencedColumnName = "productCode", nullable = false)
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

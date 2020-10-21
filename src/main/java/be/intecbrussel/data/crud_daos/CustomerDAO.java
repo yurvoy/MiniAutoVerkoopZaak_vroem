@@ -2,7 +2,6 @@ package be.intecbrussel.data.crud_daos;
 
 import be.intecbrussel.entities.Customer;
 
-import java.util.List;
 
 public interface CustomerDAO  {
 
@@ -11,5 +10,4 @@ public interface CustomerDAO  {
     void updateCustomer(Customer customer);
     void deleteCustomer(Customer customer);
 
-    List<Customer> readAllCustomers();
 }

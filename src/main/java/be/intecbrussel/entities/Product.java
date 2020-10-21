@@ -2,10 +2,11 @@ package be.intecbrussel.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products", schema = "classicmodels", catalog = "")
 public class Product {
 
     @Id
@@ -22,10 +23,15 @@ public class Product {
     private int quantityInStock;
     private BigDecimal buyPrice;
     private BigDecimal MSRP;
+    private BigDecimal msrp;
+    private Collection<OrderDetail> orderDetails;
+    private ProductLine productline;
 
     public Product() {
     }
 
+    @Id
+    @Column(name = "productCode", nullable = false, length = 15)
     public String getProductCode() {
         return productCode;
     }
@@ -34,6 +40,8 @@ public class Product {
         this.productCode = productCode;
     }
 
+    @Basic
+    @Column(name = "productName", nullable = false, length = 70)
     public String getProductName() {
         return productName;
     }
@@ -42,6 +50,8 @@ public class Product {
         this.productName = productName;
     }
 
+    @Basic
+    @Column(name = "productScale", nullable = false, length = 10)
     public String getProductScale() {
         return productScale;
     }
@@ -50,6 +60,8 @@ public class Product {
         this.productScale = productScale;
     }
 
+    @Basic
+    @Column(name = "productVendor", nullable = false, length = 50)
     public String getProductVendor() {
         return productVendor;
     }
@@ -58,6 +70,8 @@ public class Product {
         this.productVendor = productVendor;
     }
 
+    @Basic
+    @Column(name = "productDescription", nullable = false, length = -1)
     public String getProductDescription() {
         return productDescription;
     }
@@ -74,14 +88,22 @@ public class Product {
         this.productLine = productLine;
     }
 
+    @Basic
+    @Column(name = "quantityInStock", nullable = false)
     public int getQuantityInStock() {
         return quantityInStock;
+    }
+
+    public void setQuantityInStock(short quantityInStock) {
+        this.quantityInStock = quantityInStock;
     }
 
     public void setQuantityInStock(int quantityInStock) {
         this.quantityInStock = quantityInStock;
     }
 
+    @Basic
+    @Column(name = "buyPrice", nullable = false, precision = 2)
     public BigDecimal getBuyPrice() {
         return buyPrice;
     }
@@ -130,5 +152,34 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP);
+    }
+
+    @Basic
+    @Column(name = "MSRP", nullable = false, precision = 2)
+    public BigDecimal getMsrp() {
+        return msrp;
+    }
+
+    public void setMsrp(BigDecimal msrp) {
+        this.msrp = msrp;
+    }
+
+    @OneToMany(mappedBy = "product")
+    public Collection<OrderDetail> getOrderdetails() {
+        return orderDetails;
+    }
+
+    public void setOrderdetails(Collection<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productLine", referencedColumnName = "productLine", nullable = false)
+    public ProductLine getProductline() {
+        return productline;
+    }
+
+    public void setProductline(ProductLine productline) {
+        this.productline = productline;
     }
 }

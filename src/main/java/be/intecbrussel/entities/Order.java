@@ -1,11 +1,13 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", schema = "classicmodels", catalog = "")
 public class Order {
 
     @Id
@@ -19,10 +21,13 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerNumber")
     private Customer customer;
+    private int customerNumber;
 
     public Order() {
     }
 
+    @Id
+    @Column(name = "orderNumber", nullable = false)
     public int getOrderNumber() {
         return orderNumber;
     }
@@ -31,30 +36,8 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public LocalDate getRequiredDate() {
-        return requiredDate;
-    }
-
-    public void setRequiredDate(LocalDate requiredDate) {
-        this.requiredDate = requiredDate;
-    }
-
-    public LocalDate getShippedDate() {
-        return shippedDate;
-    }
-
-    public void setShippedDate(LocalDate shippedDate) {
-        this.shippedDate = shippedDate;
-    }
-
+    @Basic
+    @Column(name = "status", nullable = false, length = 15)
     public String getStatus() {
         return status;
     }
@@ -63,6 +46,8 @@ public class Order {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "comments", nullable = true, length = -1)
     public String getComments() {
         return comments;
     }
@@ -71,6 +56,8 @@ public class Order {
         this.comments = comments;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "customerNumber", referencedColumnName = "customerNumber", nullable = false)
     public Customer getCustomer() {
         return customer;
     }
@@ -108,4 +95,15 @@ public class Order {
     public int hashCode() {
         return Objects.hash(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customer);
     }
+
+    @Basic
+    @Column(name = "customerNumber", nullable = false)
+    public int getCustomerNumber() {
+        return customerNumber;
+    }
+
+    public void setCustomerNumber(int customerNumber) {
+        this.customerNumber = customerNumber;
+    }
+
 }

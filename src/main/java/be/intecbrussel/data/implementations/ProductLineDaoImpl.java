@@ -7,8 +7,7 @@ import be.intecbrussel.entities.ProductLine;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class ProductLineDaoImpl implements ProductLineDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
@@ -93,21 +92,4 @@ public class ProductLineDaoImpl implements ProductLineDAO {
         }
     }
 
-    @Override
-    public List<ProductLine> readAllProductLines() {
-        EntityManager em = null;
-        List<ProductLine> productLinesList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            productLinesList = em.createQuery("SELECT p FROM ProductLine p", ProductLine.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return productLinesList;
-    }
 }

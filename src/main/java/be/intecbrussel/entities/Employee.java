@@ -1,14 +1,12 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employees", schema = "classicmodels", catalog = "")
 public class Employee {
-
     @Id
     private int employeeNumber;
     private String lastName;
@@ -16,29 +14,33 @@ public class Employee {
     private String extension;
     private String email;
     private String jobTitle;
-
     @ManyToOne
-    @JoinColumn(name = "reportsTo")
+    @JoinColumn(name ="reportsTo")
     private Employee reportsTo;
-
-    @ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "officeCode")
     @MapsId("officeCode")
-    private Office officeCode;
-
-    @OneToMany(mappedBy = "salesRepEmployeeNumber", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Customer> customersList = new HashSet<>();
-
-
+    private Office office;
+    private Integer reportsToId;
+    private Collection<Customer> customers;
+    private Collection<Employee> managedEmployees;
 
     public Employee() {
-        this.employeeNumber = 0;
     }
 
-    public Employee(int employeeNumber) {
+    public Employee(int employeeNumber, String lastName, String firstName, String extension, String email, String jobTitle, Employee reportsTo, Office officeCode) {
         this.employeeNumber = employeeNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.extension = extension;
+        this.email = email;
+        this.jobTitle = jobTitle;
+        this.reportsTo = reportsTo;
+        this.office = office;
     }
 
+    @Id
+    @Column(name = "employeeNumber", nullable = false)
     public int getEmployeeNumber() {
         return employeeNumber;
     }
@@ -47,6 +49,8 @@ public class Employee {
         this.employeeNumber = employeeNumber;
     }
 
+    @Basic
+    @Column(name = "lastName", nullable = false, length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -55,6 +59,8 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    @Basic
+    @Column(name = "firstName", nullable = false, length = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -63,6 +69,8 @@ public class Employee {
         this.firstName = firstName;
     }
 
+    @Basic
+    @Column(name = "extension", nullable = false, length = 10)
     public String getExtension() {
         return extension;
     }
@@ -71,6 +79,8 @@ public class Employee {
         this.extension = extension;
     }
 
+    @Basic
+    @Column(name = "email", nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
@@ -79,6 +89,8 @@ public class Employee {
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "jobTitle", nullable = false, length = 50)
     public String getJobTitle() {
         return jobTitle;
     }
@@ -87,28 +99,14 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
-    public Office getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(Office office) {
-        this.officeCode = office;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "reportsTo", referencedColumnName = "employeeNumber")
     public Employee getReportsTo() {
         return reportsTo;
     }
 
     public void setReportsTo(Employee reportsTo) {
         this.reportsTo = reportsTo;
-    }
-
-    public Set<Customer> getCustomersList() {
-        return customersList;
-    }
-
-    public void setCustomersList(Set<Customer> customersList) {
-        this.customersList = customersList;
     }
 
     @Override
@@ -118,6 +116,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", extension='" + extension + '\'' +
+                ", office='" + office.getOfficeCode() + '\'' +
                 ", email='" + email + '\'' +
                 ", jobTitle='" + jobTitle;
     }
@@ -134,11 +133,49 @@ public class Employee {
                 Objects.equals(email, employee.email) &&
                 Objects.equals(jobTitle, employee.jobTitle) &&
                 Objects.equals(reportsTo, employee.reportsTo) &&
-                Objects.equals(officeCode, employee.officeCode);
+                Objects.equals(office, employee.office);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, reportsTo, officeCode);
+        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, reportsTo, office);
+    }
+
+    @Basic
+    @Column(name = "reportsTo", nullable = true)
+    public Integer getReportsToId() {
+        return reportsToId;
+    }
+
+    public void setReportsToId(Integer reportsToId) {
+        this.reportsToId = reportsToId;
+    }
+
+    @OneToMany(mappedBy = "salesRep")
+    public Collection<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Collection<Customer> customers) {
+        this.customers = customers;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "officeCode", referencedColumnName = "officeCode", nullable = false)
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+    @OneToMany(mappedBy = "reportsTo")
+    public Collection<Employee> getManagedEmployees() {
+        return managedEmployees;
+    }
+
+    public void setManagedEmployees(Collection<Employee> managedEmployees) {
+        this.managedEmployees = managedEmployees;
     }
 }

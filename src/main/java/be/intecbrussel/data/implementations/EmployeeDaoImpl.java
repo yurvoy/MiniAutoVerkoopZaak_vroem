@@ -7,8 +7,6 @@ import be.intecbrussel.entities.Employee;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
@@ -93,21 +91,4 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         }
     }
 
-    @Override
-    public List<Employee> readAllEmployees() {
-        EntityManager em = null;
-        List<Employee> employeesList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            employeesList = em.createQuery("SELECT e FROM Employee e", Employee.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return employeesList;
-    }
 }

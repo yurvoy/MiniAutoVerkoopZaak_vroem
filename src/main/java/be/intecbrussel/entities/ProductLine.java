@@ -1,21 +1,21 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "productlines")
+@Table(name = "productlines", schema = "classicmodels", catalog = "")
 public class ProductLine {
-
-    @Id
     private String productLine;
     private String textDescription;
     private String htmlDescription;
-    private String image;
+    private byte[] image;
+    private Collection<Product> products;
 
-    public ProductLine() {
-    }
-
+    @Id
+    @Column(name = "productLine", nullable = false, length = 50)
     public String getProductLine() {
         return productLine;
     }
@@ -24,6 +24,8 @@ public class ProductLine {
         this.productLine = productLine;
     }
 
+    @Basic
+    @Column(name = "textDescription", nullable = true, length = 4000)
     public String getTextDescription() {
         return textDescription;
     }
@@ -32,6 +34,8 @@ public class ProductLine {
         this.textDescription = textDescription;
     }
 
+    @Basic
+    @Column(name = "htmlDescription", nullable = true, length = -1)
     public String getHtmlDescription() {
         return htmlDescription;
     }
@@ -40,21 +44,14 @@ public class ProductLine {
         this.htmlDescription = htmlDescription;
     }
 
-    public String getImage() {
+    @Basic
+    @Column(name = "image", nullable = true)
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    @Override
-    public String toString() {
-        return "[ProductLine]" +
-                "productLine='" + productLine + '\'' +
-                ", textDescription='" + textDescription + '\'' +
-                ", htmlDescription='" + htmlDescription + '\'' +
-                ", image='" + image;
     }
 
     @Override
@@ -65,11 +62,22 @@ public class ProductLine {
         return Objects.equals(productLine, that.productLine) &&
                 Objects.equals(textDescription, that.textDescription) &&
                 Objects.equals(htmlDescription, that.htmlDescription) &&
-                Objects.equals(image, that.image);
+                Arrays.equals(image, that.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productLine, textDescription, htmlDescription, image);
+        int result = Objects.hash(productLine, textDescription, htmlDescription);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
+    }
+
+    @OneToMany(mappedBy = "productline")
+    public Collection<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }

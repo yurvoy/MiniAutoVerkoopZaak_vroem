@@ -7,8 +7,6 @@ import be.intecbrussel.entities.Order;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderDaoImpl implements OrderDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
@@ -92,21 +90,4 @@ public class OrderDaoImpl implements OrderDAO {
         }
     }
 
-    @Override
-    public List<Order> readAllOrders() {
-        EntityManager em = null;
-        List<Order> ordersList = new ArrayList<>();
-        try {
-            em = emf.createEntityManager();
-            ordersList = em.createQuery("SELECT o FROM Order o", Order.class)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-        return ordersList;
-    }
 }
