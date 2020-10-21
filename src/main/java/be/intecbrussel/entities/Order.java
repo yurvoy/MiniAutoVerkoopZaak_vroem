@@ -1,7 +1,6 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
@@ -22,6 +21,7 @@ public class Order {
     @JoinColumn(name = "customerNumber")
     private Customer customer;
     private int customerNumber;
+    private Collection<OrderDetail> orderdetails;
 
     public Order() {
     }
@@ -94,6 +94,15 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customer);
+    }
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    public Collection<OrderDetail> getOrderdetails() {
+        return orderdetails;
+    }
+
+    public void setOrderdetails(Collection<OrderDetail> orderdetails) {
+        this.orderdetails = orderdetails;
     }
 
     @Basic
