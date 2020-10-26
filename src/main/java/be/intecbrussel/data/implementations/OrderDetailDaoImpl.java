@@ -13,17 +13,17 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();
 
     @Override
-    public void createOrderDetail(Orderdetail orderDetail) {
+    public void createOrderDetail(Orderdetail orderdetail) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Orderdetail.class, orderDetail.getOrderLineNumber()) == null){
-                em.persist(orderDetail);
-                System.out.println("Orderdetail: " + orderDetail.getOrderLineNumber() + " - created");
+            if (em.find(Orderdetail.class, new OrderdetailPK(orderdetail.getProduct(), orderdetail.getOrder())) == null){
+                em.persist(orderdetail);
+                System.out.println("Orderdetail: " + orderdetail.getProduct() + orderdetail.getOrder() + " - created");
             } else {
-                em.merge(orderDetail);
+                em.merge(orderdetail);
             }
             transaction.commit();
         } catch (Exception e) {

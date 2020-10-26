@@ -19,7 +19,7 @@ public class PaymentDaoImpl implements PaymentDAO {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(Payment.class, payment.getCheckNumber()) == null){
+            if (em.find(Payment.class, new PaymentPK(payment.getCustomer(), payment.getCheckNumber())) == null){
                 em.persist(payment);
                 System.out.println("Payment: " + payment.getCheckNumber() + " - created");
             } else {

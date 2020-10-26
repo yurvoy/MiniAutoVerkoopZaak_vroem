@@ -25,7 +25,6 @@ public class TestApp {
         Employee newEmployee = employeeDAO.readEmployee(1002);
         newEmployee.setEmployeeNumber(1001);
         employeeDAO.createEmployee(newEmployee);
-        System.out.println(newEmployee);
 
         Customer newCustomer = customerDao.readCustomer(103);
         newCustomer.setCustomerNumber(101);
@@ -52,7 +51,7 @@ public class TestApp {
         newOrderDetail.setProduct(newProduct);
         orderDetailDAO.createOrderDetail(newOrderDetail);
 
-        PaymentPK newPK = new PaymentPK(newCustomer, "HQ336336");
+        PaymentPK newPK = new PaymentPK(customerDao.readCustomer(103), "HQ336336");
         Payment newPayment = paymentDAO.readPayment(newPK);
         newPayment.setCheckNumber("YU121986");
         paymentDAO.createPayment(newPayment);
@@ -65,7 +64,7 @@ public class TestApp {
         System.out.println(orderDAO.readOrder(10099));
         System.out.println(productDAO.readProduct("S33_1986"));
         System.out.println(productLineDAO.readProductLine("Bike"));
-        System.out.println(orderDetailDAO.readOrderDetail(new OrderdetailPK(productDAO.readProduct("S10_1949"), orderDAO.readOrder(10100))));
+        System.out.println(orderDetailDAO.readOrderDetail(odPK));
         System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
 
 
@@ -129,7 +128,7 @@ public class TestApp {
 
 
 
-        // Delete entities
+//   //      Delete entities
 //        customerDao.deleteCustomer(newCustomer);
 //        employeeDAO.deleteEmployee(newEmployee);
 //        officeDAO.deleteOffice(newOffice);

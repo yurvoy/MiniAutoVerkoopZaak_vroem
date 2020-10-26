@@ -104,7 +104,6 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
-                ", customers=" + customers +
                 ", office=" + office;
     }
 

@@ -63,12 +63,12 @@ public class Orderdetail {
 
     @Override
     public String toString() {
-        return "[Orderdetail]" +
-                "quantityOrdered=" + quantityOrdered +
+        return "[Orderdetail] " +
+                product + ", " +
+                order + ", " +
+                ", quantityOrdered=" + quantityOrdered +
                 ", priceEach=" + priceEach +
-                ", orderLineNumber=" + orderLineNumber +
-                ", order=" + order +
-                ", product=" + product;
+                ", orderLineNumber=" + orderLineNumber;
     }
 
     @ManyToOne
