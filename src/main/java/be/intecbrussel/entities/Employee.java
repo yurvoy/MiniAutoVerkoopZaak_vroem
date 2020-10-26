@@ -7,37 +7,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "employees", schema = "classicmodels", catalog = "")
 public class Employee {
-    @Id
     private int employeeNumber;
     private String lastName;
     private String firstName;
     private String extension;
     private String email;
     private String jobTitle;
-    @ManyToOne
-    @JoinColumn(name ="reportsTo")
-    private Employee reportsTo;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "officeCode")
-    @MapsId("officeCode")
-    private Office office;
-    private Integer reportsToId;
     private Collection<Customer> customers;
+    private Office office;
+    private Employee reportsTo;
     private Collection<Employee> managedEmployees;
-
-    public Employee() {
-    }
-
-    public Employee(int employeeNumber, String lastName, String firstName, String extension, String email, String jobTitle, Employee reportsTo, Office officeCode) {
-        this.employeeNumber = employeeNumber;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.extension = extension;
-        this.email = email;
-        this.jobTitle = jobTitle;
-        this.reportsTo = reportsTo;
-        this.office = office;
-    }
 
     @Id
     @Column(name = "employeeNumber", nullable = false)
@@ -99,28 +78,6 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "reportsTo", referencedColumnName = "employeeNumber")
-    public Employee getReportsTo() {
-        return reportsTo;
-    }
-
-    public void setReportsTo(Employee reportsTo) {
-        this.reportsTo = reportsTo;
-    }
-
-    @Override
-    public String toString() {
-        return "[Employee]" +
-                " Number=" + employeeNumber +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", extension='" + extension + '\'' +
-                ", office='" + office.getOfficeCode() + '\'' +
-                ", email='" + email + '\'' +
-                ", jobTitle='" + jobTitle;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,24 +88,24 @@ public class Employee {
                 Objects.equals(firstName, employee.firstName) &&
                 Objects.equals(extension, employee.extension) &&
                 Objects.equals(email, employee.email) &&
-                Objects.equals(jobTitle, employee.jobTitle) &&
                 Objects.equals(reportsTo, employee.reportsTo) &&
-                Objects.equals(office, employee.office);
+                Objects.equals(jobTitle, employee.jobTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeNumber, lastName, firstName, extension, email, jobTitle, reportsTo, office);
+        return Objects.hash(employeeNumber, lastName, firstName, extension, email, reportsTo, jobTitle);
     }
 
-    @Basic
-    @Column(name = "reportsTo", nullable = true)
-    public Integer getReportsToId() {
-        return reportsToId;
-    }
-
-    public void setReportsToId(Integer reportsToId) {
-        this.reportsToId = reportsToId;
+    @Override
+    public String toString() {
+        return "[Employee]" +
+                "employeeNumber=" + employeeNumber +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", customers=" + customers +
+                ", office=" + office;
     }
 
     @OneToMany(mappedBy = "salesRep")
@@ -168,6 +125,16 @@ public class Employee {
 
     public void setOffice(Office office) {
         this.office = office;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "reportsTo", referencedColumnName = "employeeNumber")
+    public Employee getReportsTo() {
+        return reportsTo;
+    }
+
+    public void setReportsTo(Employee reportsTo) {
+        this.reportsTo = reportsTo;
     }
 
     @OneToMany(mappedBy = "reportsTo")

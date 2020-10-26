@@ -43,16 +43,16 @@ public class TestApp {
         newProduct.setProductCode("S33_1986");
         productDAO.createProduct(newProduct);
 
-        ProductLine newProductLine = productLineDAO.readProductLine("Trains");
+        Productline newProductLine = productLineDAO.readProductLine("Trains");
         newProductLine.setProductLine("Bike");
         productLineDAO.createProductLine(newProductLine);
 
-        OrderDetailPK odPK = new OrderDetailPK(10100 ,"S18_1749");
-        OrderDetail newOrderDetail = orderDetailDAO.readOrderDetail(odPK);
-        newOrderDetail.setProductCode("S33_1986");
+        OrderdetailPK odPK = new OrderdetailPK(newProduct, newOrder);
+        Orderdetail newOrderDetail = orderDetailDAO.readOrderDetail(odPK);
+        newOrderDetail.setProduct(newProduct);
         orderDetailDAO.createOrderDetail(newOrderDetail);
 
-        PaymentPK newPK = new PaymentPK(103, "HQ336336");
+        PaymentPK newPK = new PaymentPK(newCustomer, "HQ336336");
         Payment newPayment = paymentDAO.readPayment(newPK);
         newPayment.setCheckNumber("YU121986");
         paymentDAO.createPayment(newPayment);
@@ -65,8 +65,8 @@ public class TestApp {
         System.out.println(orderDAO.readOrder(10099));
         System.out.println(productDAO.readProduct("S33_1986"));
         System.out.println(productLineDAO.readProductLine("Bike"));
-        System.out.println(orderDetailDAO.readOrderDetail(new OrderDetailPK(10100, "S33_1986")));
-        System.out.println(paymentDAO.readPayment(new PaymentPK(101, "YU121986")));
+        System.out.println(orderDetailDAO.readOrderDetail(new OrderdetailPK(productDAO.readProduct("S10_1949"), orderDAO.readOrder(10100))));
+        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
 
 
 
@@ -79,7 +79,7 @@ public class TestApp {
         newProduct.setProductName("GRAVEL EDR OFFROAD VAN RYSEL GRX");
         newProduct.setProductVendor("Decathlon");
         newProduct.setProductDescription("Gravel bike");
-        newProduct.setProductLine(newProductLine);
+        newProduct.setProductline(newProductLine);
         productDAO.updateProduct(newProduct);
 
         newProductLine.setHtmlDescription("https://www.decathlon.be/fr/p/velo-gravel-edr-offroad-van-rysel-grx-1x/_/R-p-327757?mc=8601607");
@@ -124,8 +124,8 @@ public class TestApp {
         System.out.println(orderDAO.readOrder(10099));
         System.out.println(productDAO.readProduct("S33_1986"));
         System.out.println(productLineDAO.readProductLine("Bike"));
-        System.out.println(orderDetailDAO.readOrderDetail(new OrderDetailPK(10100, "S33_1986")));
-        System.out.println(paymentDAO.readPayment(new PaymentPK(101, "YU121986")));
+        System.out.println(orderDetailDAO.readOrderDetail(new OrderdetailPK(newProduct, newOrder)));
+        System.out.println(paymentDAO.readPayment(new PaymentPK(newCustomer, "YU121986")));
 
 
 

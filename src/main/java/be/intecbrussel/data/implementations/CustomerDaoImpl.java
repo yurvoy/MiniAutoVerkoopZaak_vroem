@@ -7,8 +7,6 @@ import be.intecbrussel.entities.Customer;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDAO {
     private EntityManagerFactory emf = EntityManagerFactoryProvider.getInstance().getEmf();

@@ -8,27 +8,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "products", schema = "classicmodels", catalog = "")
 public class Product {
-
-    @Id
     private String productCode;
     private String productName;
-    @ManyToOne
-    @JoinColumn(name = "productLine")
-    private ProductLine productLine;
     private String productScale;
     private String productVendor;
-    @Column(columnDefinition = "text")
     private String productDescription;
-    @Column(columnDefinition = "smallint")
-    private int quantityInStock;
+    private short quantityInStock;
     private BigDecimal buyPrice;
-    private BigDecimal MSRP;
     private BigDecimal msrp;
-    private Collection<OrderDetail> orderDetails;
-    private ProductLine productline;
-
-    public Product() {
-    }
+    private Collection<Orderdetail> orderdetails;
+    private Productline productline;
 
     @Id
     @Column(name = "productCode", nullable = false, length = 15)
@@ -80,25 +69,13 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public ProductLine getProductLine() {
-        return productLine;
-    }
-
-    public void setProductLine(ProductLine productLine) {
-        this.productLine = productLine;
-    }
-
     @Basic
     @Column(name = "quantityInStock", nullable = false)
-    public int getQuantityInStock() {
+    public short getQuantityInStock() {
         return quantityInStock;
     }
 
     public void setQuantityInStock(short quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-
-    public void setQuantityInStock(int quantityInStock) {
         this.quantityInStock = quantityInStock;
     }
 
@@ -112,48 +89,6 @@ public class Product {
         this.buyPrice = buyPrice;
     }
 
-    public BigDecimal getMSRP() {
-        return MSRP;
-    }
-
-    public void setMSRP(BigDecimal MSRP) {
-        this.MSRP = MSRP;
-    }
-
-    @Override
-    public String toString() {
-        return "[Product]" +
-                "productCode='" + productCode + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productScale='" + productScale + '\'' +
-                ", productVendor='" + productVendor + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                ", quantityInStock=" + quantityInStock +
-                ", buyPrice=" + buyPrice +
-                ", MSRP=" + MSRP;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return quantityInStock == product.quantityInStock &&
-                Objects.equals(productCode, product.productCode) &&
-                Objects.equals(productName, product.productName) &&
-                Objects.equals(productLine, product.productLine) &&
-                Objects.equals(productScale, product.productScale) &&
-                Objects.equals(productVendor, product.productVendor) &&
-                Objects.equals(productDescription, product.productDescription) &&
-                Objects.equals(buyPrice, product.buyPrice) &&
-                Objects.equals(MSRP, product.MSRP);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP);
-    }
-
     @Basic
     @Column(name = "MSRP", nullable = false, precision = 2)
     public BigDecimal getMsrp() {
@@ -164,22 +99,52 @@ public class Product {
         this.msrp = msrp;
     }
 
-    @OneToMany(mappedBy = "product")
-    public Collection<OrderDetail> getOrderdetails() {
-        return orderDetails;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return quantityInStock == product.quantityInStock &&
+                Objects.equals(productCode, product.productCode) &&
+                Objects.equals(productName, product.productName) &&
+                Objects.equals(productScale, product.productScale) &&
+                Objects.equals(productVendor, product.productVendor) &&
+                Objects.equals(productDescription, product.productDescription) &&
+                Objects.equals(buyPrice, product.buyPrice) &&
+                Objects.equals(msrp, product.msrp) &&
+                Objects.equals(orderdetails, product.orderdetails) &&
+                Objects.equals(productline, product.productline);
     }
 
-    public void setOrderdetails(Collection<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
+    @Override
+    public int hashCode() {
+        return Objects.hash(productCode, productName, productScale, productVendor, productDescription, quantityInStock, buyPrice, msrp, orderdetails, productline);
+    }
+
+    @Override
+    public String toString() {
+        return "[Product]" +
+                "productCode='" + productCode + '\'' +
+                ", productName='" + productName;
+    }
+
+    @OneToMany(mappedBy = "product")
+    public Collection<Orderdetail> getOrderdetails() {
+        return orderdetails;
+    }
+
+    public void setOrderdetails(Collection<Orderdetail> orderdetails) {
+        this.orderdetails = orderdetails;
     }
 
     @ManyToOne
     @JoinColumn(name = "productLine", referencedColumnName = "productLine", nullable = false)
-    public ProductLine getProductline() {
+    public Productline getProductline() {
         return productline;
     }
 
-    public void setProductline(ProductLine productline) {
+    public void setProductline(Productline productline) {
         this.productline = productline;
     }
 }

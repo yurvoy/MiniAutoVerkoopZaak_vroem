@@ -1,7 +1,7 @@
 package be.intecbrussel.data.crud_daos;
 
-import be.intecbrussel.entities.Product;
 
+import be.intecbrussel.entities.Product;
 
 public interface ProductDAO  {
 

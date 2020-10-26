@@ -8,8 +8,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "customers", schema = "classicmodels", catalog = "")
 public class Customer {
-
-    @Id
     private int customerNumber;
     private String customerName;
     private String contactLastName;
@@ -21,16 +19,10 @@ public class Customer {
     private String state;
     private String postalCode;
     private String country;
-    @ManyToOne
-    @JoinColumn(name = "salesRepEmployeeNumber")
-    private Employee salesRepEmployeeNumber;
     private BigDecimal creditLimit;
     private Employee salesRep;
-    private Collection<Order> ordersByCustomerNumber;
-    private Collection<Payment> paymentsByCustomerNumber;
-
-    public Customer() {
-    }
+    private Collection<Order> orders;
+    private Collection<Payment> payments;
 
     @Id
     @Column(name = "customerNumber", nullable = false)
@@ -152,17 +144,6 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-
-    @Override
-    public String toString() {
-        return "[Customer]" +
-                " Number=" + customerNumber +
-                ", customerName='" + customerName + '\'' +
-                ", addressLine1='" + addressLine1 + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -179,13 +160,25 @@ public class Customer {
                 Objects.equals(state, customer.state) &&
                 Objects.equals(postalCode, customer.postalCode) &&
                 Objects.equals(country, customer.country) &&
-                Objects.equals(creditLimit, customer.creditLimit) &&
-                Objects.equals(salesRepEmployeeNumber, customer.salesRepEmployeeNumber);
+                Objects.equals(creditLimit, customer.creditLimit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit, salesRepEmployeeNumber);
+        return Objects.hash(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, creditLimit);
+    }
+
+    @Override
+    public String toString() {
+        return "[Customer]" +
+                "customerNumber=" + customerNumber +
+                ", customerName='" + customerName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", country='" + country + '\'' +
+                ", creditLimit=" + creditLimit +
+                ", salesRep=" + salesRep;
     }
 
     @ManyToOne
@@ -199,20 +192,20 @@ public class Customer {
     }
 
     @OneToMany(mappedBy = "customer")
-    public Collection<Order> getOrdersByCustomerNumber() {
-        return ordersByCustomerNumber;
+    public Collection<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrdersByCustomerNumber(Collection<Order> ordersByCustomerNumber) {
-        this.ordersByCustomerNumber = ordersByCustomerNumber;
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 
     @OneToMany(mappedBy = "customer")
-    public Collection<Payment> getPaymentsByCustomerNumber() {
-        return paymentsByCustomerNumber;
+    public Collection<Payment> getPayments() {
+        return payments;
     }
 
-    public void setPaymentsByCustomerNumber(Collection<Payment> paymentsByCustomerNumber) {
-        this.paymentsByCustomerNumber = paymentsByCustomerNumber;
+    public void setPayments(Collection<Payment> payments) {
+        this.payments = payments;
     }
 }

@@ -12,12 +12,16 @@
         <class>be.intecbrussel.entities.Payment</class>
         <class>be.intecbrussel.entities.ProductLine</class>
         <class>be.intecbrussel.entities.Product</class>
+        <class>be.intecbrussel.entities.Orderdetail</class>
+        <class>be.intecbrussel.entities.Productline</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/classicmodels?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="Bitch1212!"/>
-<!--            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>-->
+            <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306"/>
+            <property name="openjpa.ConnectionDriverName" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
 <!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />-->
 <!--            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306"/>-->
 <!--            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>-->

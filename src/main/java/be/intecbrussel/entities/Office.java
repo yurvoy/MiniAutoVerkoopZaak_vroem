@@ -7,7 +7,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "offices", schema = "classicmodels", catalog = "")
 public class Office {
-    @Id
     private String officeCode;
     private String city;
     private String phone;
@@ -18,9 +17,6 @@ public class Office {
     private String postalCode;
     private String territory;
     private Collection<Employee> employeesByOfficeCode;
-
-    public Office() {
-    }
 
     @Id
     @Column(name = "officeCode", nullable = false, length = 10)
@@ -113,20 +109,6 @@ public class Office {
     }
 
     @Override
-    public String toString() {
-        return "[Office]" +
-                "officeCode='" + officeCode + '\'' +
-                ", city='" + city + '\'' +
-                ", phone='" + phone + '\'' +
-                ", addressLine1='" + addressLine1 + '\'' +
-                ", addressLine2='" + addressLine2 + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", territory='" + territory;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -145,6 +127,13 @@ public class Office {
     @Override
     public int hashCode() {
         return Objects.hash(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
+    }
+
+    @Override
+    public String toString() {
+        return "[Office]" +
+                "officeCode='" + officeCode + '\'' +
+                ", city='" + city;
     }
 
     @OneToMany(mappedBy = "office")

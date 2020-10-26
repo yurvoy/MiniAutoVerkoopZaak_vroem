@@ -1,31 +1,29 @@
 package be.intecbrussel.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class PaymentPK implements Serializable {
-    private int customerNumber;
+
+    private Customer customer;
     private String checkNumber;
 
-    public PaymentPK(int customerNumber, String checkNumber) {
-        this.customerNumber = customerNumber;
+    public PaymentPK() {
+    }
+
+    public PaymentPK(Customer customer, String checkNumber) {
+        this.customer = customer;
         this.checkNumber = checkNumber;
     }
 
-    @Column(name = "customerNumber", nullable = false)
-    @Id
-    public int getCustomerNumber() {
-        return customerNumber;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    @Column(name = "checkNumber", nullable = false, length = 50)
-    @Id
     public String getCheckNumber() {
         return checkNumber;
     }
@@ -39,12 +37,12 @@ public class PaymentPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaymentPK paymentPK = (PaymentPK) o;
-        return customerNumber == paymentPK.customerNumber &&
+        return customer == paymentPK.customer &&
                 Objects.equals(checkNumber, paymentPK.checkNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerNumber, checkNumber);
+        return Objects.hash(customer, checkNumber);
     }
 }

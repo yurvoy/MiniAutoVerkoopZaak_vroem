@@ -2,7 +2,7 @@ package be.intecbrussel.data.implementations;
 
 import be.intecbrussel.data.crud_daos.ProductLineDAO;
 import be.intecbrussel.data.utils.EntityManagerFactoryProvider;
-import be.intecbrussel.entities.ProductLine;
+import be.intecbrussel.entities.Productline;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,15 +14,15 @@ public class ProductLineDaoImpl implements ProductLineDAO {
 
 
     @Override
-    public void createProductLine(ProductLine productLine) {
+    public void createProductLine(Productline productLine) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            if (em.find(ProductLine.class, productLine.getProductLine()) == null){
+            if (em.find(Productline.class, productLine.getProductLine()) == null){
                 em.persist(productLine);
-                System.out.println("ProductLine: " + productLine.getProductLine() + " - created");
+                System.out.println("Productline: " + productLine.getProductLine() + " - created");
             } else {
                 em.merge(productLine);
             }
@@ -37,12 +37,12 @@ public class ProductLineDaoImpl implements ProductLineDAO {
     }
 
     @Override
-    public ProductLine readProductLine(String productLineName) {
-        ProductLine productLine = new ProductLine();
+    public Productline readProductLine(String productLineName) {
+        Productline productLine = new Productline();
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            productLine = em.find(ProductLine.class, productLineName);
+            productLine = em.find(Productline.class, productLineName);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -54,7 +54,7 @@ public class ProductLineDaoImpl implements ProductLineDAO {
     }
 
     @Override
-    public void updateProductLine(ProductLine productLine) {
+    public void updateProductLine(Productline productLine) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
@@ -73,13 +73,13 @@ public class ProductLineDaoImpl implements ProductLineDAO {
     }
 
     @Override
-    public void deleteProductLine(ProductLine productLine) {
+    public void deleteProductLine(Productline productLine) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            ProductLine plToDelete = em.find(ProductLine.class, productLine.getProductLine());
+            Productline plToDelete = em.find(Productline.class, productLine.getProductLine());
             em.remove(plToDelete);
             transaction.commit();
             System.out.println("ProductLine: " + productLine.getProductLine() + " - deleted");

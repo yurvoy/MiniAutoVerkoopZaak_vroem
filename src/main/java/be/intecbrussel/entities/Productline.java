@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "productlines", schema = "classicmodels", catalog = "")
-public class ProductLine {
+public class Productline {
     private String productLine;
     private String textDescription;
     private String htmlDescription;
@@ -58,7 +58,7 @@ public class ProductLine {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductLine that = (ProductLine) o;
+        Productline that = (Productline) o;
         return Objects.equals(productLine, that.productLine) &&
                 Objects.equals(textDescription, that.textDescription) &&
                 Objects.equals(htmlDescription, that.htmlDescription) &&
@@ -70,6 +70,13 @@ public class ProductLine {
         int result = Objects.hash(productLine, textDescription, htmlDescription);
         result = 31 * result + Arrays.hashCode(image);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "[Productline]" +
+                "productLine='" + productLine + '\'' +
+                ", textDescription='" + textDescription;
     }
 
     @OneToMany(mappedBy = "productline")

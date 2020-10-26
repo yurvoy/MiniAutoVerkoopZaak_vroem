@@ -2,20 +2,28 @@ package be.intecbrussel.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "payments", schema = "classicmodels", catalog = "")
-@IdClass(PaymentPK.class)
+@IdClass(value=PaymentPK.class)
 public class Payment {
+    private String checkNumber;
     private LocalDate paymentDate;
     private BigDecimal amount;
-    private int customerNumber;
-    private String checkNumber;
     private Customer customer;
 
-    public Payment() {
+
+    @Id
+    @Column(name = "checkNumber", nullable = false, length = 50)
+    public String getCheckNumber() {
+        return checkNumber;
+    }
+
+    public void setCheckNumber(String checkNumber) {
+        this.checkNumber = checkNumber;
     }
 
     @Basic
@@ -39,55 +47,33 @@ public class Payment {
     }
 
     @Override
-    public String toString() {
-        return "Payment{" +
-                "paymentDate=" + paymentDate +
-                ", amount=" + amount +
-                ", customerNumber=" + customerNumber +
-                ", checkNumber='" + checkNumber + '\'' +
-                ", customer=" + customer +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return customerNumber == payment.customerNumber &&
+        return Objects.equals(checkNumber, payment.checkNumber) &&
                 Objects.equals(paymentDate, payment.paymentDate) &&
                 Objects.equals(amount, payment.amount) &&
-                Objects.equals(checkNumber, payment.checkNumber) &&
                 Objects.equals(customer, payment.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentDate, amount, customerNumber, checkNumber, customer);
+        return Objects.hash(checkNumber, paymentDate, amount, customer);
     }
 
-    @Id
-    @Column(name = "customerNumber", nullable = false)
-    public int getCustomerNumber() {
-        return customerNumber;
-    }
-
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
-    }
-
-    @Id
-    @Column(name = "checkNumber", nullable = false, length = 50)
-    public String getCheckNumber() {
-        return checkNumber;
-    }
-
-    public void setCheckNumber(String checkNumber) {
-        this.checkNumber = checkNumber;
+    @Override
+    public String toString() {
+        return "[Payment]" +
+                "checkNumber='" + checkNumber + '\'' +
+                ", paymentDate=" + paymentDate +
+                ", amount=" + amount +
+                ", customer=" + customer;
     }
 
     @ManyToOne
     @JoinColumn(name = "customerNumber", referencedColumnName = "customerNumber", nullable = false)
+    @Id
     public Customer getCustomer() {
         return customer;
     }
@@ -96,5 +82,3 @@ public class Payment {
         this.customer = customer;
     }
 }
-
-

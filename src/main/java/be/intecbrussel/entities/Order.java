@@ -1,29 +1,21 @@
 package be.intecbrussel.entities;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "orders", schema = "classicmodels", catalog = "")
 public class Order {
-
-    @Id
     private int orderNumber;
-    private LocalDate orderDate;
-    private LocalDate requiredDate;
-    private LocalDate shippedDate;
+    private Date orderDate;
+    private Date requiredDate;
+    private Date shippedDate;
     private String status;
-    @Column(name = "comments", columnDefinition="text")
     private String comments;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerNumber")
+    private Collection<Orderdetail> orderdetails;
     private Customer customer;
-    private Collection<OrderDetail> orderdetails;
-
-    public Order() {
-    }
 
     @Id
     @Column(name = "orderNumber", nullable = false)
@@ -33,6 +25,36 @@ public class Order {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    @Basic
+    @Column(name = "orderDate", nullable = false)
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    @Basic
+    @Column(name = "requiredDate", nullable = false)
+    public Date getRequiredDate() {
+        return requiredDate;
+    }
+
+    public void setRequiredDate(Date requiredDate) {
+        this.requiredDate = requiredDate;
+    }
+
+    @Basic
+    @Column(name = "shippedDate", nullable = true)
+    public Date getShippedDate() {
+        return shippedDate;
+    }
+
+    public void setShippedDate(Date shippedDate) {
+        this.shippedDate = shippedDate;
     }
 
     @Basic
@@ -55,16 +77,6 @@ public class Order {
         this.comments = comments;
     }
 
-    @Override
-    public String toString() {
-        return "[Order]" +
-                "orderNumber=" + orderNumber +
-                ", orderDate=" + orderDate +
-                ", requiredDate=" + requiredDate +
-                ", shippedDate=" + shippedDate +
-                ", status='" + status + '\'' +
-                ", comments='" + comments;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -77,20 +89,28 @@ public class Order {
                 Objects.equals(shippedDate, order.shippedDate) &&
                 Objects.equals(status, order.status) &&
                 Objects.equals(comments, order.comments) &&
+                Objects.equals(orderdetails, order.orderdetails) &&
                 Objects.equals(customer, order.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customer);
+        return Objects.hash(orderNumber, orderDate, requiredDate, shippedDate, status, comments, orderdetails, customer);
     }
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    public Collection<OrderDetail> getOrderdetails() {
+    @Override
+    public String toString() {
+        return "[Order]" +
+                "orderNumber=" + orderNumber +
+                ", orderDate=" + orderDate;
+    }
+
+    @OneToMany(mappedBy = "order")
+    public Collection<Orderdetail> getOrderdetails() {
         return orderdetails;
     }
 
-    public void setOrderdetails(Collection<OrderDetail> orderdetails) {
+    public void setOrderdetails(Collection<Orderdetail> orderdetails) {
         this.orderdetails = orderdetails;
     }
 
@@ -103,5 +123,4 @@ public class Order {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
 }
